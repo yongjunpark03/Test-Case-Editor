@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>GitHub Mobile 1-Click Uploader — Test-Case-Editor</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-2: #0b1120;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --err: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 12px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .app-shell {
+      max-width: 560px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hdr-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(2, 132, 199, 0.2);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      white-space: nowrap;
+    }
+    label.lbl {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 4px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      outline: none;
+    }
+    input:focus {
+      border-color: #38bdf8;
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (max-width: 440px) {
+      .row-2 { grid-template-columns: 1fr; }
+    }
+    .input-with-btn {
+      display: flex;
+      gap: 6px;
+      align-items: stretch;
+    }
+    .input-with-btn input { flex: 1; min-width: 0; }
+    button, .btn-link {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #334155;
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    button:hover, .btn-link:hover { background: #475569; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary {
+      background: var(--accent);
+      border-color: #0ea5e9;
+      color: #ffffff;
+      padding: 12px 16px;
+      font-size: 14px;
+      width: 100%;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+    .seg-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .seg-btn {
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 8px;
+    }
+    .seg-btn.active {
+      background: rgba(2, 132, 199, 0.25);
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+    .drop-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: 2px dashed #475569;
+      border-radius: 10px;
+      padding: 16px 12px;
+      background: var(--surface-2);
+      cursor: pointer;
+      text-align: center;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: #38bdf8;
+      background: rgba(2, 132, 199, 0.1);
+    }
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+    .file-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .file-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 700;
+      color: #7dd3fc;
+    }
+    .file-size {
+      color: var(--muted);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .log-box {
+      background: #020617;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      max-height: 180px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .ok-text { color: #34d399; }
+    .err-text { color: #f87171; }
+    .warn-text { color: #fbbf24; }
+    .result-banner {
+      display: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10b981;
+      color: #a7f3d0;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .result-banner.visible { display: flex; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="card">
+      <div class="hdr-row">
+        <span class="title">GitHub Mobile Uploader</span>
+        <span class="badge">2-File Sync</span>
+      </div>
+      <div>
+        <label class="lbl" for="inpRepo">Repository</label>
+        <input id="inpRepo" type="text" value="yongjunpark03/Test-Case-Editor" />
+      </div>
+      <div>
+        <div class="hdr-row" style="margin-bottom:4px;">
+          <label class="lbl" for="inpToken" style="margin-bottom:0;">GitHub Token (PAT)</label>
+          <a class="btn-link" style="padding:3px 8px;font-size:11px;" href="https://github.com/settings/tokens/new?scopes=repo&description=Test-Case-Editor-Mobile" target="_blank" rel="noopener noreferrer">Token 발급</a>
+        </div>
+        <div class="input-with-btn">
+          <input id="inpToken" type="password" placeholder="ghp_... 또는 github_pat_..." autocomplete="off" />
+          <button id="btnToggleToken" type="button">보기</button>
+          <button id="btnSaveToken" type="button">저장</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hdr-row">
+        <span class="lbl" style="margin-bottom:0;">Branch Mode</span>
+        <span id="badgeBranchMode" class="badge">Minor Branch</span>
+      </div>
+      <div class="seg-group">
+        <button id="btnModeMinor" type="button" class="seg-btn active">Minor (버전 브랜치)</button>
+        <button id="btnModeMajor" type="button" class="seg-btn">Major (main)</button>
+      </div>
+      <div class="row-2">
+        <div>
+          <label class="lbl" for="inpBranch">Target Branch</label>
+          <input id="inpBranch" type="text" value="v50.96" />
+        </div>
+        <div>
+          <label class="lbl" for="inpCommitMsg">Commit Message</label>
+          <input id="inpCommitMsg" type="text" value="Release v50.96" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hdr-row">
+        <span class="lbl" style="margin-bottom:0;">Files (ZIP 자동 추출 / 2종 직접 선택)</span>
+        <button id="btnClearFiles" type="button" style="padding:3px 8px;font-size:11px;">비우기</button>
+      </div>
+      <label id="dropZone" class="drop-zone" for="inpFiles">
+        <span style="font-weight:800;color:#38bdf8;">파일 또는 릴리즈 .zip 선택</span>
+        <span style="font-size:11px;color:#94a3b8;">.zip 선택 시 html + History.md 2종만 자동 추출</span>
+        <input id="inpFiles" type="file" accept=".zip,.html,.md" multiple class="hidden" />
+      </label>
+      <div id="fileList" class="file-list"></div>
+      <button id="btnPushGithub" type="button" class="btn-primary" disabled>GitHub Push 실행</button>
+      <div id="resultBanner" class="result-banner">
+        <span id="resultBannerText">Push 완료</span>
+        <a id="resultBranchLink" class="btn-link" href="https://github.com/yongjunpark03/Test-Case-Editor" target="_blank" rel="noopener noreferrer">GitHub 열기</a>
+      </div>
+      <div id="logBox" class="log-box">대기 중: Token 입력 후 .zip 또는 2개 파일을 선택하세요.</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const TARGET_FILES = new Set([
+        "ecu_test_integrity_admin.html",
+        "Test_Case_Editor_Requirements_History.md"
+      ]);
+
+      const state = {
+        mode: "MINOR",
+        files: [] // [{ path, bytes: Uint8Array, size }]
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      const logLine = (msg, cls = "") => {
+        const box = $("logBox");
+        if (!box) return;
+        const span = document.createElement("div");
+        if (cls) span.className = cls;
+        span.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+        box.appendChild(span);
+        box.scrollTop = box.scrollHeight;
+      };
+
+      const clearLog = () => {
+        const box = $("logBox");
+        if (box) box.innerHTML = "";
+      };
+
+      const formatBytes = (n) => {
+        if (n < 1024) return `${n} B`;
+        if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
+        return `${(n / (1024 * 1024)).toFixed(2)} MB`;
+      };
+
+      const uint8ToBase64 = (bytes) => {
+        const CHUNK = 0x8000;
+        let binary = "";
+        for (let i = 0; i < bytes.length; i += CHUNK) {
+          const slice = bytes.subarray(i, i + CHUNK);
+          binary += String.fromCharCode.apply(null, slice);
+        }
+        return btoa(binary);
+      };
+
+      const extractTargetFilesFromZip = async (arrayBuffer) => {
+        const view = new DataView(arrayBuffer);
+        const bytes = new Uint8Array(arrayBuffer);
+        const decoder = new TextDecoder("utf-8");
+        const extracted = [];
+
+        let eocdOffset = -1;
+        for (let i = bytes.length - 22; i >= Math.max(0, bytes.length - 65558); i--) {
+          if (view.getUint32(i, true) === 0x06054b50) {
+            eocdOffset = i;
+            break;
+          }
+        }
+        if (eocdOffset < 0) throw new Error("유효한 ZIP 파일이 아닙니다.");
+
+        const totalEntries = view.getUint16(eocdOffset + 10, true);
+        let cdOffset = view.getUint32(eocdOffset + 16, true);
+
+        for (let e = 0; e < totalEntries && cdOffset + 46 <= bytes.length; e++) {
+          if (view.getUint32(cdOffset, true) !== 0x02014b50) break;
+          const method = view.getUint16(cdOffset + 10, true);
+          const compSize = view.getUint32(cdOffset + 20, true);
+          const nameLen = view.getUint16(cdOffset + 28, true);
+          const extraLen = view.getUint16(cdOffset + 30, true);
+          const commentLen = view.getUint16(cdOffset + 32, true);
+          const localHdrOffset = view.getUint32(cdOffset + 42, true);
+          const rawName = decoder.decode(bytes.subarray(cdOffset + 46, cdOffset + 46 + nameLen));
+          const baseName = rawName.split("/").pop();
+
+          if (TARGET_FILES.has(baseName) && localHdrOffset + 30 <= bytes.length && view.getUint32(localHdrOffset, true) === 0x04034b50) {
+            const locNameLen = view.getUint16(localHdrOffset + 26, true);
+            const locExtraLen = view.getUint16(localHdrOffset + 28, true);
+            const dataStart = localHdrOffset + 30 + locNameLen + locExtraLen;
+            if (compSize > 0 && dataStart + compSize <= bytes.length) {
+              const compData = bytes.subarray(dataStart, dataStart + compSize);
+              let outBytes;
+              if (method === 0) {
+                outBytes = new Uint8Array(compData);
+              } else if (method === 8 && typeof DecompressionStream !== "undefined") {
+                const ds = new DecompressionStream("deflate-raw");
+                const stream = new Blob([compData]).stream().pipeThrough(ds);
+                const outBuf = await new Response(stream).arrayBuffer();
+                outBytes = new Uint8Array(outBuf);
+              } else {
+                throw new Error(`지원되지 않는 압축 방식(${method})입니다.`);
+              }
+              extracted.push({ path: baseName, bytes: outBytes, size: outBytes.length });
+            }
+          }
+          cdOffset += 46 + nameLen + extraLen + commentLen;
+        }
+        return extracted;
+      };
+
+      const renderFileList = () => {
+        const listEl = $("fileList");
+        const pushBtn = $("btnPushGithub");
+        if (!listEl) return;
+        listEl.innerHTML = "";
+        state.files.forEach((f, idx) => {
+          const row = document.createElement("div");
+          row.className = "file-item";
+          row.innerHTML = `
+            <div class="file-meta">
+              <span class="file-name">${f.path}</span>
+              <span class="file-size">${formatBytes(f.size)}</span>
+            </div>
+            <button type="button" data-rm-idx="${idx}" style="padding:3px 8px;font-size:11px;">삭제</button>
+          `;
+          listEl.appendChild(row);
+        });
+        listEl.querySelectorAll("[data-rm-idx]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const i = Number(btn.getAttribute("data-rm-idx"));
+            state.files.splice(i, 1);
+            renderFileList();
+          });
+        });
+        if (pushBtn) pushBtn.disabled = state.files.length === 0;
+      };
+
+      const applyBranchMode = (mode) => {
+        state.mode = mode;
+        const isMajor = mode === "MAJOR";
+        $("btnModeMinor").classList.toggle("active", !isMajor);
+        $("btnModeMajor").classList.toggle("active", isMajor);
+        $("badgeBranchMode").textContent = isMajor ? "Major -> main" : "Minor Branch";
+        if (isMajor) {
+          $("inpBranch").value = "main";
+        } else if ($("inpBranch").value.trim() === "main" || !$("inpBranch").value.trim()) {
+          $("inpBranch").value = "v50.96";
+        }
+      };
+
+      const handleIncomingFiles = async (fileList) => {
+        const arr = Array.from(fileList || []);
+        if (!arr.length) return;
+        $("resultBanner").classList.remove("visible");
+
+        for (const file of arr) {
+          const lower = file.name.toLowerCase();
+          if (lower.endsWith(".zip")) {
+            const verMatch = file.name.match(/(v\d+\.\d+)/i);
+            if (verMatch && state.mode === "MINOR") {
+              $("inpBranch").value = verMatch[1];
+              $("inpCommitMsg").value = `Release ${verMatch[1]}`;
+            }
+            try {
+              const buf = await file.arrayBuffer();
+              const extracted = await extractTargetFilesFromZip(buf);
+              if (extracted.length === 0) {
+                logLine(`ZIP('${file.name}')에 대상 파일 2종이 없습니다.`, "warn-text");
+              } else {
+                extracted.forEach(item => {
+                  const exist = state.files.findIndex(x => x.path === item.path);
+                  if (exist >= 0) state.files[exist] = item;
+                  else state.files.push(item);
+                });
+                logLine(`ZIP('${file.name}')에서 ${extracted.length}개 파일 자동 추출 완료`, "ok-text");
+              }
+            } catch (err) {
+              logLine(`ZIP 해제 실패: ${err.message}`, "err-text");
+            }
+          } else {
+            const buf = await file.arrayBuffer();
+            const u8 = new Uint8Array(buf);
+            const item = { path: file.name, bytes: u8, size: u8.length };
+            const exist = state.files.findIndex(x => x.path === item.path);
+            if (exist >= 0) state.files[exist] = item;
+            else state.files.push(item);
+            logLine(`파일 추가: ${file.name} (${formatBytes(u8.length)})`);
+          }
+        }
+        renderFileList();
+      };
+
+      const ghFetch = async (url, token, options = {}) => {
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            "Accept": "application/vnd.github+json",
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+          }
+        });
+        const text = await res.text();
+        let data = null;
+        try { data = text ? JSON.parse(text) : null; } catch (_) {}
+        return { ok: res.ok, status: res.status, data, text };
+      };
+
+      const pushToGitHub = async () => {
+        const repo = $("inpRepo").value.trim().replace(/^https?:\/\/github\.com\//i, "").replace(/\.git$/i, "");
+        const token = $("inpToken").value.trim();
+        const branch = $("inpBranch").value.trim() || "main";
+        const message = $("inpCommitMsg").value.trim() || `Update ${branch}`;
+
+        if (!repo.includes("/")) {
+          logLine("Repository 형식이 올바르지 않습니다. (예: owner/repo)", "err-text");
+          return;
+        }
+        if (!token) {
+          logLine("GitHub Token(PAT)을 입력하세요.", "err-text");
+          return;
+        }
+        if (state.files.length === 0) {
+          logLine("업로드할 파일을 먼저 선택하세요.", "err-text");
+          return;
+        }
+
+        try { localStorage.setItem("gh_mobile_pat_v1", token); } catch (_) {}
+
+        const pushBtn = $("btnPushGithub");
+        pushBtn.disabled = true;
+        $("resultBanner").classList.remove("visible");
+        clearLog();
+
+        const apiBase = `https://api.github.com/repos/${repo}`;
+        try {
+          logLine(`저장소 확인 중: ${repo} (브랜치: ${branch})`);
+          let refRes = await ghFetch(`${apiBase}/git/ref/heads/${encodeURIComponent(branch)}`, token);
+          let headSha = refRes.ok ? refRes.data?.object?.sha : null;
+
+          if (!headSha && branch !== "main") {
+            logLine(`'${branch}' 브랜치 없음 -> main 기준으로 생성 시도...`, "warn-text");
+            const mainRes = await ghFetch(`${apiBase}/git/ref/heads/main`, token);
+            if (mainRes.ok && mainRes.data?.object?.sha) {
+              const createRef = await ghFetch(`${apiBase}/git/refs`, token, {
+                method: "POST",
+                body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: mainRes.data.object.sha })
+              });
+              if (!createRef.ok) {
+                throw new Error(`브랜치 생성 실패 (${createRef.status}): ${createRef.data?.message || createRef.text}`);
+              }
+              headSha = mainRes.data.object.sha;
+              logLine(`새 브랜치 '${branch}' 생성 완료`, "ok-text");
+            }
+          }
+
+          if (!headSha) {
+            // Empty repo fallback: Contents API sequential PUT
+            logLine("빈 저장소 감지 -> Contents API 순차 커밋 실행...", "warn-text");
+            for (const f of state.files) {
+              const getCur = await ghFetch(`${apiBase}/contents/${encodeURIComponent(f.path)}?ref=${encodeURIComponent(branch)}`, token);
+              const payload = {
+                message: `${message} (${f.path})`,
+                content: uint8ToBase64(f.bytes),
+                branch
+              };
+              if (getCur.ok && getCur.data?.sha) payload.sha = getCur.data.sha;
+              const putRes = await ghFetch(`${apiBase}/contents/${encodeURIComponent(f.path)}`, token, {
+                method: "PUT",
+                body: JSON.stringify(payload)
+              });
+              if (!putRes.ok) throw new Error(`업로드 실패 (${f.path}): ${putRes.data?.message || putRes.status}`);
+              logLine(`커밋 완료: ${f.path}`, "ok-text");
+            }
+          } else {
+            // Atomic single-commit via Git Data API
+            const commitRes = await ghFetch(`${apiBase}/git/commits/${headSha}`, token);
+            if (!commitRes.ok) throw new Error(`Base commit 조회 실패: ${commitRes.data?.message || commitRes.status}`);
+            const baseTreeSha = commitRes.data.tree.sha;
+
+            const treeEntries = [];
+            for (const f of state.files) {
+              logLine(`Blob 업로드 중: ${f.path} (${formatBytes(f.size)})...`);
+              const blobRes = await ghFetch(`${apiBase}/git/blobs`, token, {
+                method: "POST",
+                body: JSON.stringify({ content: uint8ToBase64(f.bytes), encoding: "base64" })
+              });
+              if (!blobRes.ok) throw new Error(`Blob 실패 (${f.path}): ${blobRes.data?.message || blobRes.status}`);
+              treeEntries.push({
+                path: f.path,
+                mode: "100644",
+                type: "blob",
+                sha: blobRes.data.sha
+              });
+            }
+
+            logLine("Git Tree 생성 중...");
+            const treeRes = await ghFetch(`${apiBase}/git/trees`, token, {
+              method: "POST",
+              body: JSON.stringify({ base_tree: baseTreeSha, tree: treeEntries })
+            });
+            if (!treeRes.ok) throw new Error(`Tree 생성 실패: ${treeRes.data?.message || treeRes.status}`);
+
+            logLine("단일 커밋 생성 중...");
+            const newCommitRes = await ghFetch(`${apiBase}/git/commits`, token, {
+              method: "POST",
+              body: JSON.stringify({ message, tree: treeRes.data.sha, parents: [headSha] })
+            });
+            if (!newCommitRes.ok) throw new Error(`Commit 실패: ${newCommitRes.data?.message || newCommitRes.status}`);
+
+            logLine(`브랜치 '${branch}' 포인터 업데이트 중...`);
+            const patchRef = await ghFetch(`${apiBase}/git/refs/heads/${encodeURIComponent(branch)}`, token, {
+              method: "PATCH",
+              body: JSON.stringify({ sha: newCommitRes.data.sha, force: false })
+            });
+            if (!patchRef.ok) throw new Error(`Ref 업데이트 실패: ${patchRef.data?.message || patchRef.status}`);
+          }
+
+          logLine(`완료! ${state.files.length}개 파일이 '${branch}' 브랜치에 푸시되었습니다.`, "ok-text");
+          $("resultBannerText").textContent = `${branch} 푸시 완료 (${state.files.length}개 파일)`;
+          $("resultBranchLink").href = `https://github.com/${repo}/tree/${encodeURIComponent(branch)}`;
+          $("resultBanner").classList.add("visible");
+        } catch (err) {
+          logLine(`오류: ${err.message}`, "err-text");
+        } finally {
+          pushBtn.disabled = state.files.length === 0;
+        }
+      };
+
+      // Init
+      try {
+        const saved = localStorage.getItem("gh_mobile_pat_v1");
+        if (saved) $("inpToken").value = saved;
+      } catch (_) {}
+
+      $("btnToggleToken").addEventListener("click", () => {
+        const inp = $("inpToken");
+        const isPw = inp.type === "password";
+        inp.type = isPw ? "text" : "password";
+        $("btnToggleToken").textContent = isPw ? "숨김" : "보기";
+      });
+
+      $("btnSaveToken").addEventListener("click", () => {
+        try {
+          localStorage.setItem("gh_mobile_pat_v1", $("inpToken").value.trim());
+          logLine("Token이 브라우저에 저장되었습니다.", "ok-text");
+        } catch (err) {
+          logLine("Token 저장 실패 (브라우저 저장소 제한)", "warn-text");
+        }
+      });
+
+      $("btnModeMinor").addEventListener("click", () => applyBranchMode("MINOR"));
+      $("btnModeMajor").addEventListener("click", () => applyBranchMode("MAJOR"));
+
+      $("inpFiles").addEventListener("change", (e) => {
+        handleIncomingFiles(e.target.files);
+        e.target.value = "";
+      });
+
+      const dz = $("dropZone");
+      dz.addEventListener("dragover", (e) => { e.preventDefault(); dz.classList.add("drag-over"); });
+      dz.addEventListener("dragleave", () => dz.classList.remove("drag-over"));
+      dz.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dz.classList.remove("drag-over");
+        handleIncomingFiles(e.dataTransfer.files);
+      });
+
+      $("btnClearFiles").addEventListener("click", () => {
+        state.files = [];
+        renderFileList();
+        $("resultBanner").classList.remove("visible");
+        logLine("파일 목록이 초기화되었습니다.");
+      });
+
+      $("btnPushGithub").addEventListener("click", pushToGitHub);
+    })();
+  </script>
+</body>
+</html>
