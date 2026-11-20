@@ -3814,7 +3814,7 @@
 
   
       /* ==========================================================================
-         v1.08 @compact-engineering-ui High-Contrast Audit & Remediation Rules
+         v1.0.9 @compact-engineering-ui High-Contrast Audit & Remediation Rules
          Fixes foreground-background collisions across:
          1) Page 1: PKG 실행 순서 (#unifiedPrePostPkgOrderContainer, .pkg-chip-*)
          2) Page 7: Utility 4 PTC Field (#utilCardSection4, STEP 1/2/3 badges, .bg-slate-900/90, table thead th)
@@ -4056,7 +4056,7 @@
 
   
       /* ==========================================================================
-         v1.08 Upgrades:
+         v1.0.9 Upgrades:
          1) Page 3 Hamburger (☰) Drag & Drop Row Reordering (.drag-hamburger-handle)
          2) Page 1 PTC Table View (#ptcExcelGridTable) Clean Page 4 Styling + Guaranteed Column Width Resize
          ========================================================================== */
@@ -4192,10 +4192,10 @@
 
 
       /* ==========================================================================
-         v1.08 Single-Screen Compact Nav Density (All Pages Left Sub-Navs & #sidebar)
+         v1.0.9 Single-Screen Compact Nav Density (All Pages Left Sub-Navs & #sidebar)
          Reduces vertical padding, margins, and gaps so every Nav fits in 1 screen without scrolling
          ========================================================================== */
-      /* v1.08: Reclaim horizontal space from Sidebar, Left Nav & <main> padding into Main Workspace */
+      /* v1.0.9: Reclaim horizontal space from Sidebar, Left Nav & <main> padding into Main Workspace */
       #sidebar {
         width: 120px !important;
         min-width: 120px !important;
@@ -4521,7 +4521,7 @@
             <button type="button" id="btnThemeDarkStudio" data-theme-mode="dark-studio" class="theme-switch-btn active-theme" title="테마1">테마1</button>
             <button type="button" id="btnThemeHalcyonic" data-theme-mode="halcyonic" class="theme-switch-btn" title="테마2">테마2</button>
           </div>
-          <span class="text-xs text-emerald-300 font-semibold mono" id="badgeAdminSyncState">Serverless v1.08</span>
+          <span class="text-xs text-emerald-300 font-semibold mono" id="badgeAdminSyncState">Serverless v1.0.9</span>
           <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
         </div>
       </div>
@@ -5318,7 +5318,7 @@
               </div>
             </div>
 
-            <!-- Favorite Grammar Dropdown & Example Panel (v1.08) -->
+            <!-- Favorite Grammar Dropdown & Example Panel (v1.0.9) -->
             <div id="editorFavoriteGrammarGuideCard" class="bg-slate-950/90 border border-slate-800 rounded-lg p-2 space-y-1.5">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="text-[11px] font-extrabold text-amber-300 shrink-0">&#9733; 문법 설명</span>
@@ -9202,6 +9202,15 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
 
     const DEFAULT_GRAMMARS = [..._HEAD_DEFAULT_GRAMMARS,
       {
+        id: "GRAM_CHECK_SIG_VS_SIG",
+        name: "Check if (Signal vs Signal)",
+        pattern: "Check if {SIGNAL} {OP} {SIGNAL2}",
+        action: "READ_VERIFY",
+        mappedPkg: "",
+        pkgArgs: "",
+        description: "두 신호를 Multi-Check로 동일 폴링 주기에서 비교합니다 (하위에서 {SIGNAL2}를 먼저 읽어 초기값 0 변수에 저장 후 {SIGNAL}과 비교 · +- 오차 · within 지원)"
+      },
+      {
         id: "GRAM_CHECK",
         name: "Check if",
         pattern: "Check if {SIGNAL} {OP} {VALUE}",
@@ -12694,7 +12703,7 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
       return `im viewissue ${hostArgs.join(" ")} ${richOpt}--batch ${normalizedIdsStr}`.replace(/\s+/g, " ").trim();
     }
 
-    // Build PTC Source Integrity (`si projecto` / `si projectco` / `si viewproject` / etc.) CLI commands (v1.08)
+    // Build PTC Source Integrity (`si projecto` / `si projectco` / `si viewproject` / etc.) CLI commands (v1.0.9)
     function buildSiSingleCheckoutCmd(projectPath, fileName, siCfg = {}) {
       const proj = String(projectPath || "c:/Projects/TCU_Gen4/HelperSignal/project.pj").trim();
       const fn = String(fileName || "HelperSignal_L2.xlsx").trim().replace(/^["']|["']$/g, "");
@@ -13503,7 +13512,7 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
       const pythonScript = `#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 \"\"\"
-PTC Windchill RV&S 12 (Integrity) Test Case 연동 스크립트 (자동 생성됨 - v1.08)
+PTC Windchill RV&S 12 (Integrity) Test Case 연동 스크립트 (자동 생성됨 - v1.0.9)
 - 방식 1: 로컬 PTC Client CLI (im.exe) 호출 (사내 SSO / 로그인 세션 자동 재사용)
 - 방식 2: Windchill RV&S 12 REST API (HTTP PATCH / POST) 호출
 \"\"\"
@@ -17337,7 +17346,7 @@ if __name__ == "__main__":
 
       let escaped = pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const tokenOrder = [];
-      const placeholderRegex = /\\\{(SIGNAL|VALUE|OP|TIME|UNIT|TEXT|PACKAGE)\\\}/gi;
+      const placeholderRegex = /\\\{(SIGNAL2|SIGNAL|VALUE|OP|TIME|UNIT|TEXT|PACKAGE)\\\}/gi;
 
       const regexBody = escaped.replace(placeholderRegex, (match, rawTokenName) => {
         const tokenName = String(rawTokenName || "").toUpperCase();
@@ -17345,6 +17354,8 @@ if __name__ == "__main__":
         switch (tokenName) {
           case "SIGNAL":
             return "([^\\s=><!]+)";
+          case "SIGNAL2":
+            return "([^\\s=><!]+(?:\\s*(?:\\+-|±)\\s*[+-]?\\d+(?:\\.\\d+)?)?(?:\\s+into\\s+[A-Za-z_][A-Za-z0-9_]*)?)";
           case "OP":
             return "(==|!=|>=|<=|=|>|<)";
           case "VALUE":
@@ -17539,6 +17550,9 @@ if __name__ == "__main__":
           if (inlineCheckTimeoutSuffix && extracted.VALUE !== undefined) {
             extracted.VALUE = `${String(extracted.VALUE).trim()} ${inlineCheckTimeoutSuffix}`;
           }
+          if (inlineCheckTimeoutSuffix && extracted.SIGNAL2 !== undefined) {
+            extracted.SIGNAL2 = `${String(extracted.SIGNAL2).trim()} ${inlineCheckTimeoutSuffix}`;
+          }
           const critTimingExtra = inlineCritTimingMode
             ? { critTimingMode: inlineCritTimingMode, timingSignal: inlineCritTimingSignal }
             : {};
@@ -17651,13 +17665,83 @@ if __name__ == "__main__":
             // Min/Max is strictly for reference display only - no range blocking!
           }
 
+          // Resolve {SIGNAL2} for "Check if {SIGNAL} {OP} {SIGNAL2}" (also auto-detect when GRAM_CHECK has a registered signal as RHS)
+          let signal2Obj = null;
+          let compareSignalVarName = "";
+          const resolveCompareSignalObj = (rawRhsVal) => {
+            const rhsDetails = parseReadVerifyValueDetails(rawRhsVal);
+            const rawSig2Tok = String(rhsDetails.targetVal || "").trim();
+            if (!rawSig2Tok || /^[+-]?\d+(?:\.\d+)?/.test(rawSig2Tok)) return null;
+            const br2 = rawSig2Tok.match(/^([^\[\]]+)((?:\[[^\[\]]+\])+)$/);
+            const baseSig2Tok = br2 ? br2[1].trim() : rawSig2Tok;
+            const dimSpec2 = br2 ? br2[2].trim() : "";
+            const baseSig2Obj = sigIdxCache.byName.get(rawSig2Tok) ||
+                                sigIdxCache.byNameLower.get(rawSig2Tok.toLowerCase()) ||
+                                sigIdxCache.byHelperLower.get(rawSig2Tok.toLowerCase()) ||
+                                sigIdxCache.byName.get(baseSig2Tok) ||
+                                sigIdxCache.byNameLower.get(baseSig2Tok.toLowerCase()) ||
+                                sigIdxCache.byHelperLower.get(baseSig2Tok.toLowerCase()) ||
+                                resolveDirectOverrideElementSignal(rawSig2Tok) ||
+                                resolveDirectOverrideElementSignal(baseSig2Tok) ||
+                                null;
+            if (!baseSig2Obj) return null;
+            if (dimSpec2) {
+              const dToks = Array.from(dimSpec2.matchAll(/\[([^\[\]]+)\]/g)).map(m => m[1].trim());
+              const isAllNum = dToks.length > 0 && dToks.every(tok => /^\d+$/.test(tok));
+              const cleanBase2 = String(baseSig2Obj.name || baseSig2Tok).replace(/((?:\[\d+\])+)$/, "").trim();
+              const rawBaseMap2 = String(baseSig2Obj.mappingType || "xaMeasValueVariable");
+              if (isAllNum) {
+                const elemName2 = `${cleanBase2}${dimSpec2}`;
+                const elemMap2 = (rawBaseMap2 === "xaMeasMatrixVariable" || rawBaseMap2 === "xaMeasVectorVariable") ? "xaMeasValueVariable" : rawBaseMap2;
+                const appendDim2 = (pStr) => pStr ? `${String(pStr).replace(/((?:\[\d+\])+)$/, "")}${dimSpec2}` : pStr;
+                return {
+                  ...baseSig2Obj,
+                  name: elemName2,
+                  baseSignalName: cleanBase2,
+                  baseMappingType: rawBaseMap2,
+                  mappingType: elemMap2,
+                  inlineDimSpec: dimSpec2,
+                  isIndexedElement: true,
+                  path: appendDim2(baseSig2Obj.path || `${baseSig2Obj.system || "TCU-XCP"}/${cleanBase2}`),
+                  pathSil: appendDim2(baseSig2Obj.pathSil),
+                  pathHilEtas: appendDim2(baseSig2Obj.pathHilEtas),
+                  pathHilDspace: appendDim2(baseSig2Obj.pathHilDspace)
+                };
+              }
+            }
+            return baseSig2Obj;
+          };
+
+          let effectiveGram = gram;
+          if (gram.id === "GRAM_CHECK_SIG_VS_SIG" && extracted.SIGNAL2 !== undefined) {
+            signal2Obj = resolveCompareSignalObj(extracted.SIGNAL2);
+            if (!signal2Obj) {
+              // RHS is not a registered signal (e.g., numeric literal) -> fall through to GRAM_CHECK ({VALUE})
+              continue;
+            }
+            extracted.VALUE = extracted.SIGNAL2;
+          } else if (gram.id === "GRAM_CHECK" && extracted.VALUE !== undefined && !inlineCritTimingMode) {
+            const autoSig2 = resolveCompareSignalObj(extracted.VALUE);
+            if (autoSig2) {
+              signal2Obj = autoSig2;
+              extracted.SIGNAL2 = extracted.VALUE;
+              const sigVsSigGram = (state.grammars || DEFAULT_GRAMMARS).find(g => g && g.id === "GRAM_CHECK_SIG_VS_SIG");
+              if (sigVsSigGram) effectiveGram = sigVsSigGram;
+            }
+          }
+          if (signal2Obj) {
+            let safeId2 = String(signal2Obj.name || "sig2").replace(/[^A-Za-z0-9_]/g, "_").replace(/^_+/, "") || "sig2";
+            if (/^[0-9]/.test(safeId2)) safeId2 = "v_" + safeId2;
+            compareSignalVarName = `v_${safeId2}`;
+          }
+
           const leadingSpaces = (rawLine.match(/^(\s*)/) || ["", ""])[1].replace(/\t/g, "  ").length;
           let canonicalStepText = trimmed;
-          if (gram && gram.pattern) {
-            if (/^##\s*\{(?:VALUE|TEXT)\}$/i.test(gram.pattern.trim())) {
+          if (effectiveGram && effectiveGram.pattern) {
+            if (/^##\s*\{(?:VALUE|TEXT)\}$/i.test(effectiveGram.pattern.trim())) {
               canonicalStepText = `##${(extracted.VALUE || extracted.TEXT || "").trim()}`;
             } else {
-              canonicalStepText = gram.pattern.replace(/\{(SIGNAL|VALUE|OP|TIME|UNIT|TEXT)\}/gi, (_, tk) => {
+              canonicalStepText = effectiveGram.pattern.replace(/\{(SIGNAL2|SIGNAL|VALUE|OP|TIME|UNIT|TEXT)\}/gi, (_, tk) => {
                 const up = String(tk || "").toUpperCase();
                 return extracted[up] !== undefined ? String(extracted[up]).trim() : "";
               }).replace(/\s+/g, " ").trim();
@@ -17684,10 +17768,12 @@ if __name__ == "__main__":
             normalizedMatched: Boolean(matchedViaNorm || canonicalStepText !== trimmed),
             leadingSpaces,
             sectionTag: currentSectionTag,
-            grammar: gram,
-            action: gram.action,
+            grammar: effectiveGram,
+            action: effectiveGram.action,
             tokens: extracted,
             signal: signalObj,
+            signal2: signal2Obj,
+            compareSignalVarName,
             inlineDimSpec,
             isHelperRef,
             ...critTimingExtra
@@ -18649,6 +18735,9 @@ if __name__ == "__main__":
         case "MULTI_CHECK":
           return `blk = CreateTsBlock(${JSON.stringify(rawTxt)}); mc = CreateTsMultiCheck(WaitUntilTrue, 100ms); blk.AppendTestStep(mc)`;
         case "READ_VERIFY": {
+          if (parsedLine.signal2 && parsedLine.compareSignalVarName) {
+            return `[Signal vs Signal MultiCheck] TsMultiCheck(1. TsRead(${parsedLine.signal2.name} -> ${parsedLine.compareSignalVarName} [init=0]) -> 2. TsRead(${resolvedSigName} ${t.OP} ${parsedLine.compareSignalVarName}))`;
+          }
           if (parsedLine.signal && parsedLine.signal.dynamicLookup) {
             const dl = parsedLine.signal.dynamicLookup;
             const idxReadSummary = dl.indexArgs.filter(a => a.kind === "SIGNAL").map(a => `TsRead(${a.signal.name}->${a.varName})`).join(" + ");
@@ -18948,7 +19037,7 @@ if __name__ == "__main__":
       return xml;
     }
 
-    function buildTsReadXmlStep({ stepId, mappingRef, sigMappingType = "xaMeasValueVariable", op, rawVal, isInsideMultiCheck = false, isReadSaveOnly = false, defaultWaitMs = null, indent = "        " }) {
+    function buildTsReadXmlStep({ stepId, mappingRef, sigMappingType = "xaMeasValueVariable", op, rawVal, isInsideMultiCheck = false, isReadSaveOnly = false, defaultWaitMs = null, expectVarRef = false, indent = "        " }) {
       const details = isReadSaveOnly
         ? { targetVal: "", tolVal: null, saveVar: String(rawVal || "").trim() }
         : parseReadVerifyValueDetails(rawVal);
@@ -18975,9 +19064,15 @@ if __name__ == "__main__":
           xml += `${indent}    <EXPRESSION xsi:type="vectorAllExpression">\n`;
           xml += `${indent}      <BASE-EXPRESSION xsi:type="builtNumericExpression">\n`;
           xml += `${indent}        <RELATION xsi:type="string">${escapeXml(rel)}</RELATION>\n`;
-          xml += `${indent}        <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
-          xml += `${indent}          ${buildTypedInnerValueXml(details.targetVal)}\n`;
-          xml += `${indent}        </VALUE>\n`;
+          if (expectVarRef) {
+            xml += `${indent}        <VALUE xsi:type="varBaseExpression">\n`;
+            xml += `${indent}          <NAME xsi:type="string">${escapeXml(details.targetVal)}</NAME>\n`;
+            xml += `${indent}        </VALUE>\n`;
+          } else {
+            xml += `${indent}        <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
+            xml += `${indent}          ${buildTypedInnerValueXml(details.targetVal)}\n`;
+            xml += `${indent}        </VALUE>\n`;
+          }
           xml += `${indent}      </BASE-EXPRESSION>\n`;
           xml += `${indent}    </EXPRESSION>\n`;
           xml += `${indent}  </EXPECTATION>\n`;
@@ -18997,9 +19092,15 @@ if __name__ == "__main__":
           xml += `${indent}    <EXPRESSION xsi:type="matrixAllExpression">\n`;
           xml += `${indent}      <BASE-EXPRESSION xsi:type="builtNumericExpression">\n`;
           xml += `${indent}        <RELATION xsi:type="string">${escapeXml(rel)}</RELATION>\n`;
-          xml += `${indent}        <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
-          xml += `${indent}          ${buildTypedInnerValueXml(details.targetVal)}\n`;
-          xml += `${indent}        </VALUE>\n`;
+          if (expectVarRef) {
+            xml += `${indent}        <VALUE xsi:type="varBaseExpression">\n`;
+            xml += `${indent}          <NAME xsi:type="string">${escapeXml(details.targetVal)}</NAME>\n`;
+            xml += `${indent}        </VALUE>\n`;
+          } else {
+            xml += `${indent}        <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
+            xml += `${indent}          ${buildTypedInnerValueXml(details.targetVal)}\n`;
+            xml += `${indent}        </VALUE>\n`;
+          }
           xml += `${indent}      </BASE-EXPRESSION>\n`;
           xml += `${indent}    </EXPRESSION>\n`;
           xml += `${indent}  </EXPECTATION>\n`;
@@ -19036,9 +19137,15 @@ if __name__ == "__main__":
         xml += `${indent}  <EXPECTATION xsi:type="${expType}">\n`;
         xml += `${indent}    <EXPRESSION xsi:type="builtNumericExpression">\n`;
         xml += `${indent}      <RELATION xsi:type="string">${escapeXml(rel)}</RELATION>\n`;
-        xml += `${indent}      <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
-        xml += `${indent}        ${buildTypedInnerValueXml(details.targetVal)}\n`;
-        xml += `${indent}      </VALUE>\n`;
+        if (expectVarRef) {
+          xml += `${indent}      <VALUE xsi:type="varBaseExpression">\n`;
+          xml += `${indent}        <NAME xsi:type="string">${escapeXml(details.targetVal)}</NAME>\n`;
+          xml += `${indent}      </VALUE>\n`;
+        } else {
+          xml += `${indent}      <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
+          xml += `${indent}        ${buildTypedInnerValueXml(details.targetVal)}\n`;
+          xml += `${indent}      </VALUE>\n`;
+        }
         if (isEqRelation && effectiveTol !== null) {
           xml += `${indent}      <TOLERANCE style="absolute-value" xsi:type="Tolerance">\n`;
           xml += `${indent}        <VALUE format-rev="2" xsi:type="valueBaseExpression">\n`;
@@ -19173,7 +19280,7 @@ if __name__ == "__main__":
       return xml;
     }
 
-    // Dynamic Map/Curve Lookup XML generator (v1.08):
+    // Dynamic Map/Curve Lookup XML generator (v1.0.9):
     // 1) Pre-read Calibration Map/Curve once into v_{Map/Curve} (reduces XCP overhead)
     // 2) Inside TsMultiCheck (same polling cycle!), TsRead each dynamic index signal -> v_signal_A, v_signal_B
     //    and evaluate TsCalculation: v_Map.GetValue(v_signal_A, v_signal_B) or v_Curve.Interpolate(v_signal_C)
@@ -19241,6 +19348,98 @@ if __name__ == "__main__":
       xml += `${mcInd}  <TIME-UNIT xsi:type="string">ms</TIME-UNIT>\n`;
       xml += `${mcInd}</TIME-OPTION>\n`;
       xml += `${mcInd}<MATCHALL xsi:type="boolean">True</MATCHALL>\n`;
+      xml += `${innerInd}</TESTSTEP>\n`;
+      xml += `${baseIndent}</TESTSTEP>\n`;
+      return xml;
+    }
+
+    // Signal vs Signal Multi-Check XML generator (v1.0.9):
+    // Grammar: Check if {SIGNAL} {OP} {SIGNAL2} [+- tol] [within {TIME} {UNIT}]
+    // Inside TsMultiCheck:
+    //   1) FIRST: TsRead {SIGNAL2} (evaluation OFF) -> save into variable v_{SIGNAL2} (declared with initial value 0)
+    //   2) SECOND: TsRead {SIGNAL} with expectation {OP} v_{SIGNAL2} (varBaseExpression, optional tolerance)
+    function buildSignalVsSignalMultiCheckXml({ p, t, resolvedSigName, sigMappingType, rawStepText, baseIndent, openMultiCheck, xmlMcState, genStepHexId, TS_BLOCK_XSI, varInitialZeroSet }) {
+      const sig2 = p && p.signal2;
+      const cmpVarName = String((p && p.compareSignalVarName) || "").trim();
+      if (!sig2 || !cmpVarName) return "";
+      if (varInitialZeroSet) varInitialZeroSet.add(cmpVarName);
+
+      const details = parseReadVerifyValueDetails(t.SIGNAL2 !== undefined ? t.SIGNAL2 : t.VALUE);
+      const relOp = String(t.OP || "==").trim();
+      const tolSuffix = (details.tolVal !== null && String(details.tolVal).trim() !== "") ? ` +- ${details.tolVal}` : "";
+      const saveVarSuffix = details.saveVar ? ` into ${details.saveVar}` : "";
+      const cmpRawVal = `${cmpVarName}${tolSuffix}${saveVarSuffix}`;
+      const sig2MapType = sig2.mappingType || "xaMeasValueVariable";
+
+      let xml = "";
+      if (openMultiCheck) {
+        const mcInd = (xmlMcState && xmlMcState.baseIndent ? xmlMcState.baseIndent : baseIndent) + "    ";
+        xml += buildTsReadXmlStep({
+          stepId: genStepHexId(),
+          mappingRef: sig2.name,
+          sigMappingType: sig2MapType,
+          op: "==",
+          rawVal: cmpVarName,
+          isInsideMultiCheck: true,
+          isReadSaveOnly: true,
+          indent: mcInd
+        });
+        xml += buildTsReadXmlStep({
+          stepId: genStepHexId(),
+          mappingRef: resolvedSigName,
+          sigMappingType,
+          op: relOp,
+          rawVal: cmpRawVal,
+          isInsideMultiCheck: true,
+          isReadSaveOnly: false,
+          expectVarRef: true,
+          indent: mcInd
+        });
+        return xml;
+      }
+
+      const waitMs = (details.timeoutMs !== null && details.timeoutMs !== undefined)
+        ? details.timeoutMs
+        : (parseInt(state.pkgMultiCheckWaitMs ?? state.pkgReadDefaultWaitMs, 10) || 100);
+      const innerInd = baseIndent + "  ";
+      const mcInd = innerInd + "  ";
+      xml += `${baseIndent}<TESTSTEP format-rev="3" id="${genStepHexId()}" name="TsBlock" xsi:type="${TS_BLOCK_XSI}">\n`;
+      xml += buildActionI18nXml(rawStepText, innerInd);
+      xml += `${innerInd}<TESTSTEP id="${genStepHexId()}" name="TsMultiCheck" xsi:type="utility-2fb63e30-6816-11e5-bfd3-4851b798ee63">\n`;
+      // Step 1 (FIRST): Read signal2 and save into variable (initial value = 0)
+      xml += buildTsReadXmlStep({
+        stepId: genStepHexId(),
+        mappingRef: sig2.name,
+        sigMappingType: sig2MapType,
+        op: "==",
+        rawVal: cmpVarName,
+        isInsideMultiCheck: true,
+        isReadSaveOnly: true,
+        indent: mcInd
+      });
+      // Step 2 (SECOND): Read signal and compare against saved variable
+      xml += buildTsReadXmlStep({
+        stepId: genStepHexId(),
+        mappingRef: resolvedSigName,
+        sigMappingType,
+        op: relOp,
+        rawVal: cmpRawVal,
+        isInsideMultiCheck: true,
+        isReadSaveOnly: false,
+        expectVarRef: true,
+        indent: mcInd
+      });
+      xml += `${mcInd}<MATCHALL xsi:type="boolean">True</MATCHALL>\n`;
+      xml += `${mcInd}<TIME-OPTION xsi:type="finallyTrueOption">\n`;
+      xml += `${mcInd}  <EXPRESSION xsi:type="manualExpression">\n`;
+      xml += `${mcInd}    <BASE-EXPRESSION xsi:type="varBaseExpression">\n`;
+      xml += `${mcInd}      <NAME xsi:type="string">value</NAME>\n`;
+      xml += `${mcInd}    </BASE-EXPRESSION>\n`;
+      xml += `${mcInd}  </EXPRESSION>\n`;
+      xml += `${mcInd}  <TIME format-rev="2" xsi:type="valueBaseExpression">\n`;
+      xml += `${mcInd}    <VALUE xsi:type="integer">${Math.max(1, Math.round(Number(waitMs) || 100))}</VALUE>\n`;
+      xml += `${mcInd}  </TIME>\n`;
+      xml += `${mcInd}</TIME-OPTION>\n`;
       xml += `${innerInd}</TESTSTEP>\n`;
       xml += `${baseIndent}</TESTSTEP>\n`;
       return xml;
@@ -19387,6 +19586,9 @@ if __name__ == "__main__":
           }
           usedSignals.set(p.signal.name, p.signal);
         }
+        if (p.valid && p.signal2 && p.signal2.name) {
+          usedSignals.set(p.signal2.name, p.signal2);
+        }
         if (p.tokens) {
           const idxCacheForTok = ensureSignalIndex();
           [p.tokens.DELAY_SIGNAL, p.tokens.DURATION_SIGNAL].forEach(tSig => {
@@ -19478,7 +19680,7 @@ if __name__ == "__main__":
         }
       }
 
-      // v1.08 Non-Auto-TA mode: Link each Wait until (MULTI_CHECK) with its following #crit READ_VERIFY steps
+      // v1.0.9 Non-Auto-TA mode: Link each Wait until (MULTI_CHECK) with its following #crit READ_VERIFY steps
       // 1) Inside Wait until: emit Read {signal} Into {varName} (isReadSaveOnly: true)
       // 2) Inside #crit: emit TsCalculation comparing {varName} with original {op} {VALUE}
       const mcCaptureByLine = new Map();
@@ -19607,6 +19809,7 @@ if __name__ == "__main__":
       const TS_LOOP_XSI = "utility-3da58cf0-4fef-11dc-be56-0013728784ee";
 
       let testStepsXml = "";
+      const varInitialZeroSet = new Set();
       // 1. Precondition Block (name="TsPrecondBlock", <ACTION>...<DVALUE>Precondition</DVALUE>..., and sibling <TESTSTEP name="TsBlock">)
       testStepsXml += `    <TESTSTEP format-rev="3" id="${genStepHexId()}" name="TsPrecondBlock" xsi:type="${TS_PRECOND_XSI}">\n`;
       testStepsXml += buildActionI18nXml("Precondition", "      ");
@@ -19999,6 +20202,12 @@ if __name__ == "__main__":
           }
           testStepsXml += `${baseIndent}</TESTSTEP>\n`;
         } else if (p.action === "READ_VERIFY") {
+          if (p.signal2 && p.compareSignalVarName) {
+            testStepsXml += buildSignalVsSignalMultiCheckXml({
+              p, t, resolvedSigName, sigMappingType, rawStepText, baseIndent, openMultiCheck, xmlMcState, genStepHexId, TS_BLOCK_XSI, varInitialZeroSet
+            });
+            return;
+          }
           if (p.signal && p.signal.dynamicLookup) {
             testStepsXml += buildDynamicMapCurveLookupXml({
               p, t, rawStepText, baseIndent, openMultiCheck, xmlMcState, genStepHexId, TS_BLOCK_XSI,
@@ -20250,25 +20459,42 @@ if __name__ == "__main__":
       const traceRecordingXml = buildTraceRecordingXml(traceRecordedSignalsByGroup);
 
       const savedVarSet = new Set();
+      const unescapeXmlVar = (s) => String(s || "")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&apos;/g, "'")
+        .replace(/&amp;/g, "&")
+        .trim();
       for (const m of testStepsXml.matchAll(/<(?:VARIABLE-NAME|SAVE-IN)\b[^>]*>([^<]+)<\/(?:VARIABLE-NAME|SAVE-IN)>/gi)) {
-        const rawVar = String(m[1] || "")
-          .replace(/&lt;/g, "<")
-          .replace(/&gt;/g, ">")
-          .replace(/&quot;/g, "\"")
-          .replace(/&apos;/g, "'")
-          .replace(/&amp;/g, "&")
-          .trim();
+        const rawVar = unescapeXmlVar(m[1]);
         if (rawVar) savedVarSet.add(rawVar);
       }
+      for (const m of testStepsXml.matchAll(/<VARIABLE-NAME\b[^>]*>\s*<DVALUE\b[^>]*>([^<]+)<\/DVALUE>\s*<\/VARIABLE-NAME>/gi)) {
+        const rawVar = unescapeXmlVar(m[1]);
+        if (rawVar) savedVarSet.add(rawVar);
+      }
+      varInitialZeroSet.forEach(vName => {
+        if (vName) savedVarSet.add(vName);
+      });
       const variablesBlockXml = savedVarSet.size > 0
         ? [
             `  <VARIABLES xsi:type="variableContainer">`,
-            ...Array.from(savedVarSet).map(vName => [
-              `    <VARIABLE format-rev="1" xsi:type="variable">`,
-              `      <NAME xsi:type="string">${escapeXml(vName)}</NAME>`,
-              `      <DEFAULT-VALUE xsi:type="undefined"/>`,
-              `    </VARIABLE>`
-            ].join("\n")),
+            ...Array.from(savedVarSet).map(vName => {
+              const defaultValXml = varInitialZeroSet.has(vName)
+                ? [
+                    `      <DEFAULT-VALUE xsi:type="value">`,
+                    `        <DATA xsi:type="integer">0</DATA>`,
+                    `      </DEFAULT-VALUE>`
+                  ].join("\n")
+                : `      <DEFAULT-VALUE xsi:type="undefined"/>`;
+              return [
+                `    <VARIABLE format-rev="1" xsi:type="variable">`,
+                `      <NAME xsi:type="string">${escapeXml(vName)}</NAME>`,
+                defaultValXml,
+                `    </VARIABLE>`
+              ].join("\n");
+            }),
             `  </VARIABLES>`
           ].join("\n")
         : "";
@@ -25380,13 +25606,31 @@ const STUDIO_I18N_DICT = {
         functionalCount: functionalTcs.length,
         skippedCount
       };
-      state.testCases = functionalTcs;
-      state.activeTcIndex = 0;
+      if (!Array.isArray(state.testCases)) state.testCases = [];
+      if (!Array.isArray(state.selectedPkgTcIndices)) state.selectedPkgTcIndices = [];
+      let impAdded = 0, impUpdated = 0, impFirstIdx = -1;
+      functionalTcs.forEach(tcObj => {
+        const idStr = String(tcObj.id || tcObj.ptcId || "").trim();
+        const exIdx = idStr ? state.testCases.findIndex(t => String(t.id || t.ptcId || "").trim() === idStr) : -1;
+        if (exIdx >= 0) {
+          state.testCases[exIdx] = tcObj;
+          if (impFirstIdx < 0) impFirstIdx = exIdx;
+          impUpdated++;
+        } else {
+          state.testCases.push(tcObj);
+          const nIdx = state.testCases.length - 1;
+          if (impFirstIdx < 0) impFirstIdx = nIdx;
+          if (!state.selectedPkgTcIndices.includes(nIdx)) state.selectedPkgTcIndices.push(nIdx);
+          impAdded++;
+        }
+      });
+      state.activeTcIndex = impFirstIdx >= 0 ? impFirstIdx : 0;
       state.tcStatusFilter = "ALL";
       const tsBadgeEl = document.getElementById("tsImportBadge");
       if (tsBadgeEl) tsBadgeEl.textContent = `TS #${suiteDocId}`;
       renderAll();
-      showToast(`TS #${suiteDocId} 로드 완료: 전체 ${totalScanned}건 중 ${functionalTcs.length}건 로드됨`, "success");
+      saveToStorage();
+      showToast(`TS #${suiteDocId} 로드 완료: 신규 ${impAdded}건 추가, 기존 ${impUpdated}건 갱신 (총 ${state.testCases.length}건 유지)`, "success");
     }
 
     // TS 샘플 더미 생성기(generateSimulatedTestSuite) 완전 삭제됨
@@ -25648,6 +25892,16 @@ const STUDIO_I18N_DICT = {
           const query = rawArg.replace(/^["']/, "");
           const tokenStart = pos - rawArg.length;
           return { triggered: true, mode: "PACKAGE", prefix: pre, query, start: tokenStart, end: pos };
+        }
+      }
+
+      // 0a. Signal-vs-Signal RHS autocomplete: "Check if {SIGNAL} {OP} {SIGNAL2}"
+      const sigVsSigRhsMatch = currentLineBeforeCursor.match(/^\s*Check\s+if\s+[^\s=><!]+\s*(?:==|!=|>=|<=|>|<|=)\s*([^\s=><!]*)$/i);
+      if (sigVsSigRhsMatch) {
+        const query = sigVsSigRhsMatch[1] || "";
+        if (!/^[+-]?\d/.test(query)) {
+          const tokenStart = pos - query.length;
+          return { triggered: true, mode: "SIGNAL", prefix: "Check if RHS", query, start: tokenStart, end: pos };
         }
       }
 
@@ -27157,9 +27411,14 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
           return { addedCount: 0, updatedCount: 0, skippedCount };
         }
 
-        const isSuiteReplace = Boolean(opts.isSuiteImport || (functionalItems.length > 1 && opts.replaceSuite !== false));
+        // v1.0.9: Never wipe existing TCs on PTC ID / TS ID import unless explicitly requested (opts.replaceSuite === true)
+        const isSuiteReplace = Boolean(opts.replaceSuite === true);
+        if (typeof ensureUtilityStateInitialized === "function") ensureUtilityStateInitialized();
+        if (!Array.isArray(state.testCases)) state.testCases = [];
+        if (!Array.isArray(state.selectedPkgTcIndices)) state.selectedPkgTcIndices = [];
         let addedCount = 0;
         let updatedCount = 0;
+        let firstTargetIdx = -1;
         let lastTargetIdx = state.activeTcIndex || 0;
         const builtTcs = [];
 
@@ -27208,35 +27467,51 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
           const tsBadgeEl = document.getElementById("tsImportBadge");
           if (tsBadgeEl) tsBadgeEl.textContent = `TS #${suiteIdStr}`;
         } else {
+          if (opts.isSuiteImport) {
+            const suiteIdStr = String(opts.suiteId || state.utilityPtcConfig?.importTargetId || state.testSuiteId || "2172569").trim();
+            state.testSuiteId = suiteIdStr;
+            state.testSuiteStats = {
+              totalScanned: Math.max(totalScanned, builtTcs.length + skippedCount),
+              functionalCount: builtTcs.length,
+              skippedCount
+            };
+            const tsBadgeEl = document.getElementById("tsImportBadge");
+            if (tsBadgeEl) tsBadgeEl.textContent = `TS #${suiteIdStr}`;
+          }
           builtTcs.forEach(tcData => {
             const itemIdStr = tcData.id;
             const existingIdx = itemIdStr ? state.testCases.findIndex(t => String(t.id || t.ptcId || "").trim() === itemIdStr) : -1;
             if (existingIdx >= 0) {
               state.testCases[existingIdx] = tcData;
+              if (firstTargetIdx < 0) firstTargetIdx = existingIdx;
               lastTargetIdx = existingIdx;
               updatedCount++;
             } else {
               state.testCases.push(tcData);
               lastTargetIdx = state.testCases.length - 1;
+              if (firstTargetIdx < 0) firstTargetIdx = lastTargetIdx;
               if (Array.isArray(state.selectedPkgTcIndices) && !state.selectedPkgTcIndices.includes(lastTargetIdx)) {
                 state.selectedPkgTcIndices.push(lastTargetIdx);
               }
               addedCount++;
             }
           });
-          state.activeTcIndex = lastTargetIdx;
+          state.tcStatusFilter = "ALL";
+          state.activeTcIndex = firstTargetIdx >= 0 ? firstTargetIdx : lastTargetIdx;
         }
 
-        state.utilityPtcConfig.exportTcIndex = lastTargetIdx;
-        if (state.testCases[lastTargetIdx]?.id) {
-          state.utilityPtcConfig.exportTargetId = state.testCases[lastTargetIdx].id;
+        state.utilityPtcConfig.exportTcIndex = state.activeTcIndex;
+        if (state.testCases[state.activeTcIndex]?.id) {
+          state.utilityPtcConfig.exportTargetId = state.testCases[state.activeTcIndex].id;
         }
         renderAll();
         saveToStorage();
         if (isSuiteReplace) {
           showToast(`[${sourceLabel}] TS #${state.testSuiteId} Import 완료: 전체 ${state.testSuiteStats.totalScanned}건 중 Functional Test ${builtTcs.length}건 로드됨 (${skippedCount}건 제외)!`, "success");
+        } else if (opts.isSuiteImport) {
+          showToast(`[${sourceLabel}] TS #${state.testSuiteId} Import 완료: 신규 ${addedCount}건 추가, 기존 ${updatedCount}건 갱신 (총 ${state.testCases.length}건 유지)!`, "success");
         } else {
-          showToast(`[${sourceLabel}] PTC ID Import 완료: 신규 ${addedCount}건 추가, 기존 ${updatedCount}건 갱신!`, "success");
+          showToast(`[${sourceLabel}] PTC ID Import 완료: 신규 ${addedCount}건 추가, 기존 ${updatedCount}건 갱신 (총 ${state.testCases.length}건 유지)!`, "success");
         }
         return { addedCount, updatedCount, skippedCount };
       };
@@ -27731,7 +28006,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
       }
 
       // =========================================================================
-      // Utility 2 & Utility 5: PTC Source Integrity (`si projecto / projectco`) File Checkout & Studio Auto-Router (v1.08)
+      // Utility 2 & Utility 5: PTC Source Integrity (`si projecto / projectco`) File Checkout & Studio Auto-Router (v1.0.9)
       // =========================================================================
       const loadArrayBufferIntoStudioBySlot = async (buf, fileName, requestedSlot = "AUTO") => {
         ensureUtilityStateInitialized();
@@ -28611,7 +28886,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
         const siCfg = state.utilitySiConfig;
         const activeEntries = getActiveSiFileEntries(siCfg);
         const psLines = [
-          "# PTC Source Integrity (si projecto) & Integrity (im) PowerShell Automation Script (v1.08)",
+          "# PTC Source Integrity (si projecto) & Integrity (im) PowerShell Automation Script (v1.0.9)",
           "$ErrorActionPreference = 'Continue'",
           "$CurDir = (Get-Location).Path",
           ...activeEntries.map(e => `si projecto --project ="${e.projectPath}" --nolock --targetfile "$CurDir\\${e.fileName}" "${e.fileName}"`),
@@ -33621,7 +33896,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
         });
       }
 
-      // Unified Signal & Override Filter Events (v1.08)
+      // Unified Signal & Override Filter Events (v1.0.9)
       const jumpToGuideSignalSettings = () => {
         state.activeTab = "ecutest";
         state.guideTopTab = "SIGNALS";
@@ -33945,7 +34220,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
       
       // [@EXPORT_SCOPE_START: UTILITY_ONLY]
       // =====================================================================
-      // 8. UTILITY PAGE EVENT LISTENERS (v1.08)
+      // 8. UTILITY PAGE EVENT LISTENERS (v1.0.9)
       // =====================================================================
       const parseUploadedExcelOrCsvToGrid = async (file) => {
         const buf = await file.arrayBuffer();
@@ -34887,7 +35162,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
 
     // Tag-based Script Slicer: Strips @EXPORT_SCOPE_START / @EXPORT_SCOPE_END blocks not needed by target scope
     function stripTaggedScriptBlocksByScope(jsText, targetScope) {
-      // v1.08: Preserve all shared helper functions and event listeners across Studio / Utility exports
+      // v1.0.9: Preserve all shared helper functions and event listeners across Studio / Utility exports
       // so Page 1 (Py 브릿지, .py, ID Import, TC 삭제, 테마 전환 등) and cross-page features never break.
       return String(jsText || "");
     }
@@ -35749,6 +36024,12 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
           args: "{SIGNAL}: 스칼라 · Helper($...$) · Map/Vector 전체 또는 [x][y] 단일 인덱스 | {VALUE}: 물리값",
           ex: "Set ShS_ValTyp to 3\nSet $shift_type$ to 2\nSet TCU_ShiftPattern_Map[0][1] to 5  // 단일 요소 [0][1]만 Write\nSet TCU_ShiftPattern_Map to 0        // 인덱스 생략 시 전체 [0]~[179] 일괄 Write"
         },
+        GRAM_CHECK_SIG_VS_SIG: {
+          cat: "SIGNAL", badgeBg: "#047857", wide: true,
+          api: "tsMultiCheck (1. {SIGNAL2} 먼저 tsRead -> 초기값 0 변수 저장, 2. {SIGNAL} {OP} 변수 비교)",
+          args: "{SIGNAL} | {OP} (==,!=,>=,<=,>,<) | {SIGNAL2} [+- 오차] [within {TIME} {UNIT}]",
+          ex: "Check if VehicleSpeed == TargetSpeed\nCheck if TCU_ActualGear == TCU_TargetGear within 500 ms\nCheck if WheelSpeed_FL == WheelSpeed_FR +- 1.5"
+        },
         GRAM_CHECK: {
           cat: "SIGNAL", badgeBg: "#059669", wide: true,
           api: "tsRead + Expectation (기본 Timeout 100ms · == 비교 시 TOLERANCE 자동/인라인 적용)",
@@ -35952,6 +36233,8 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
         const mods = [];
         if (id === "GRAM_CHECK" || id === "GRAM_WAIT_UNTIL_SIG") {
           mods.push("+-", "within", "into");
+        } else if (id === "GRAM_CHECK_SIG_VS_SIG") {
+          mods.push("+-", "within");
         } else if (id === "GRAM_CHECK_AFTER_SIGNAL" || id === "GRAM_CHECK_FOR_SIGNAL") {
           mods.push("+-");
         } else if (act === "MULTI_CHECK") {
@@ -36329,7 +36612,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
       };
       window.syncGuide2TierBookmarks = syncGuide2TierBookmarks;
 
-      // v1.08 Lab: Single All-in-One Deserialization Test Example (all 14 utility-* xsi:type steps)
+      // v1.0.9 Lab: Single All-in-One Deserialization Test Example (all 14 utility-* xsi:type steps)
       const LAB_DESER_TEST_TC = {
         id: "LAB_DESER_TEST",
         title: "LAB_2024_3_Deserialization_AllInOne",
@@ -36715,7 +36998,7 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
     });
   </script>
 
-  <!-- v1.08: Modal asking whether to include Trace Analysis (TA) when generating .pkg -->
+  <!-- v1.0.9: Modal asking whether to include Trace Analysis (TA) when generating .pkg -->
   <div id="pkgIncludeTaConfirmModal" class="hidden fixed inset-0 z-[100000] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
     <div class="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-5 space-y-4">
       <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
