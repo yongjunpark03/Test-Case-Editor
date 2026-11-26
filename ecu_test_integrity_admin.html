@@ -4877,7 +4877,7 @@
             <button type="button" id="btnThemeDarkStudio" data-theme-mode="dark-studio" class="theme-switch-btn active-theme" title="테마1">테마1</button>
             <button type="button" id="btnThemeHalcyonic" data-theme-mode="halcyonic" class="theme-switch-btn" title="테마2">테마2</button>
           </div>
-          <span class="text-xs text-emerald-300 font-semibold mono" id="badgeAdminSyncState">Serverless v0.0.15</span>
+          <span class="text-xs text-emerald-300 font-semibold mono" id="badgeAdminSyncState">Serverless v0.0.16</span>
           <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
         </div>
       </div>
@@ -11035,7 +11035,7 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
       const taPkg = ctx && ctx.pkg ? ctx.pkg : null;
       const taValRev = (ctx && ctx.taValRev) ? ctx.taValRev : "2";
       if (child.type === "ANALYSIS_BLOCK") {
-        lines.push(`${indentStr}<ANALYSISITEM format-rev="1" uuid="${escapeXml(child.uuid)}" xsi:type="analysisBlock">`);
+        lines.push(`${indentStr}<ANALYSISITEM uuid="${escapeXml(child.uuid)}" xsi:type="analysisBlock">`);
         lines.push(`${indentStr}  <NAME xsi:type="string">${escapeXml(child.name || "Block")}</NAME>`);
         if (Array.isArray(child.children) && child.children.length > 0) {
           child.children.forEach(subCh => appendTaControlFlowItemXml(lines, subCh, indentStr + "  ", ctx));

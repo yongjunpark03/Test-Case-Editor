@@ -2052,3 +2052,6 @@ v1.0.15 (2026-11-21)
 ## v0.0.15 (2026-11-26) [`#condN` 구간 격리 TA 매핑 변수명 끝 `"_"` 추가 (Identifier 충돌 수정)]
 - **TA `<VIRTUAL-SIGNAL>` TC Variables 매핑명 끝 `"_"` 추가**: Package `<VARIABLES>`와 동일한 이름으로 TA에 매핑될 때 발생하는 ECU-TEST identifier 충돌 오류를 방지하기 위해, `TC Variables`에서 매핑되는 `<VIRTUAL-SIGNAL>`의 `<KEY>`는 원본 변수명(`t_trace_0`, `t_cond{N}_start`, `t_cond{N}_end`)을 유지하고 TA 내 `<NAME>`은 끝에 `_`를 붙인 **`t_trace_0_`**, **`t_cond{N}_start_`**, **`t_cond{N}_end_`**로 출력하도록 수정.
 - **구간 격리 TA 수식 연동**: `Condition check` 모드 및 `Wait until` 모드의 `#cond{N}` 시간 구간 격리 수식(`Def_cond` 및 `TriggerBlock`)에서도 `t_cond{N}_start_` / `t_cond{N}_end_`로 일관되게 참조하도록 반영.
+
+## v0.0.16 (2026-11-26) [TA `analysisBlock` `format-rev` 속성 제거 (ECU-TEST XML 스키마 오류 수정)]
+- **`<ANALYSISITEM xsi:type="analysisBlock">` 스키마 수정**: ECU-TEST TA Block 양식에 맞춰 `appendTaControlFlowItemXml()`의 `ANALYSIS_BLOCK` 출력에서 불필요한 `format-rev="1"` 속성을 제거하고 `<ANALYSISITEM uuid="..." xsi:type="analysisBlock">` 형식으로 생성하도록 수정.
