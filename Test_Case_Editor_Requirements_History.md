@@ -2055,3 +2055,21 @@ v1.0.15 (2026-11-21)
 
 ## v0.0.16 (2026-11-26) [TA `analysisBlock` `format-rev` 속성 제거 (ECU-TEST XML 스키마 오류 수정)]
 - **`<ANALYSISITEM xsi:type="analysisBlock">` 스키마 수정**: ECU-TEST TA Block 양식에 맞춰 `appendTaControlFlowItemXml()`의 `ANALYSIS_BLOCK` 출력에서 불필요한 `format-rev="1"` 속성을 제거하고 `<ANALYSISITEM uuid="..." xsi:type="analysisBlock">` 형식으로 생성하도록 수정.
+
+## v0.0.17 (2026-11-26) [Test Step Override 사용 시 `Wait 100 ms` 자동 추가]
+- **Override `WRITE` 스텝 하단에 `TsWait(100 ms)` 자동 삽입**: `.pkg` 생성 시 `resolveA2lWriteOverride()`로 Override Write(`OL*` 및 `Swt`)가 적용되는 `TsBlock` 마지막에 `buildTsWaitXmlStep(..., "100", "ms")`를 자동으로 추가하도록 개선(Python 미리보기 및 PKG 구조 트리 미리보기에도 `+ TsWait(100 ms)` 표시 연동).
+
+## v0.0.18 (2026-11-26) [`#condN` 구간 격리 방법 A 전환 (`cond_section` 단일 정수 변수 · `Time()` 의존성 완전 제거)]
+- **`cond_section` 단일 Tracing 정수 변수 도입 (`t_trace_0`/`t_condN_start`/`t_condN_end` 및 `Time()` 제거)**:
+  - ECU-TEST 구버전(`2021.3` 등)의 `Time()` 미지원 오류 및 벽시계(`time.monotonic()`)–트레이스 시간축 오차를 근본적으로 해소하기 위해, `#condN` 구간 격리 시 `tracing="true"` 정수형 패키지 변수 `cond_section`(초기값 `0`) 1개만 사용하도록 전면 전환.
+  - Precondition(`Start Trace`) 시 `cond_section = 0`, 각 `#cond{N}` 진입 시 `TsCalculation`으로 `cond_section = N`(정수 `valueBaseExpression`)을 기록하고 `#crit{N}`까지 유지한 뒤 다음 `#cond{M}` 진입 시 `M`으로 전환, Test Flow 종료 시 `0`으로 복귀.
+- **TA 매핑·수식·Plot 연동**:
+  - `TC Variables` 레코딩 그룹의 `cond_section`을 TA `<VIRTUAL-SIGNAL>` **`cond_section_`**으로 매핑(identifier 충돌 방지).
+  - `Def_cond` 및 `TriggerBlock[#Cond{N}]` 수식을 `(cond_section_ == N) and (...)`, Stop Trigger를 `(cond_section_ != N) or (...)`로 생성하며, `Plot_Review`의 `separate` 서브플롯에도 `cond_section_`을 함께 표시.
+
+## v0.0.19 (2026-11-27) [`7. Test Design` 페이지 신설 (MC/DC 자동 선별 · Active/Deactive 전환 시퀀스 · Excel & TC 에디터 Export)]
+- **`7. Test Design` 페이지(`#view-testdesign`) 추가**:
+  - 논리식 파서(`and`/`or`/`not`/`xor`, 괄호 지원, 최대 10개 변수)로 전체 진리표(`Truth Table`)를 생성하고, 각 조건 변수의 독립쌍(MC/DC Independence Pair)을 최소 케이스 집합으로 자동 선별(예: `A and B and C` → `TTT/TTF/TFT/FTT`, `A or B or C` → `FFF/FFT/FTF/TFF`, `A and (B or C) or D` → 최소 5케이스).
+  - **Active ↔ Deactive 상태 전환 시퀀서(`Transition`)**: 선별된 케이스를 `Active → Deactive → Active ...` 교차 순서로 자동 배열(예: `2.FFT → 1.FFF → 3.FTF → 1.FFF → 4.TFF`)하여 모든 상태 전환을 TC에서 검증할 수 있도록 구성하며, 진리표 체크박스로 수동 케이스 조정도 지원.
+  - **조건(`Conditions`) & 검증(`Criteria`) 매핑 + 신호 사전 자동완성**: 각 변수(`A`, `B`, `C`, `D`...)의 `Signal`/`Op`/`Value(T)`와 `Criteria`의 `Active`/`Deactive` 기대값을 입력받아 실시간으로 `#condN` / `#critN` 스크립트를 미리보기.
+  - **Excel Export(`.xlsx`) & `1. TC 에디터` Export**: 요약·조건/판정 정의·전체 진리표(선별 여부 및 MC/DC 역할)·전환 시퀀스를 `.xlsx`로 다운로드하고, `TC Export` 클릭 시 각 `#condN`에 `Condition check A` / `Condition check ~A` 문법, 각 `#critN`에 `Check if` 문법을 채운 새 Test Case를 `1. TC 에디터`로 즉시 내보내기 지원.

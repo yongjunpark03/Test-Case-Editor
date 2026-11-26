@@ -4748,6 +4748,136 @@
     body.sidebar-collapsed #sidebar #bakedExportPageSelectorBox {
       display: none !important;
     }
+
+    /* v0.0.19: 7. Test Design (Compact Engineering UI, Scoped Strictly to #view-testdesign) */
+    #view-testdesign .td-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.5rem;
+      padding: 8px 10px;
+      color: #f8fafc;
+    }
+    html[data-theme="halcyonic"] #view-testdesign .td-card,
+    body.theme-halcyonic #view-testdesign .td-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+    #view-testdesign .td-input,
+    #view-testdesign .td-select {
+      height: 28px;
+      padding: 2px 7px;
+      font-size: 11px;
+      border-radius: 4px;
+      border: 1px solid #475569;
+      background: #1e293b;
+      color: #f8fafc;
+    }
+    html[data-theme="halcyonic"] #view-testdesign .td-input,
+    html[data-theme="halcyonic"] #view-testdesign .td-select,
+    body.theme-halcyonic #view-testdesign .td-input,
+    body.theme-halcyonic #view-testdesign .td-select {
+      background: #ffffff;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+    #view-testdesign .td-btn {
+      height: 28px;
+      padding: 0 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    #view-testdesign .td-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    #view-testdesign .td-table th {
+      padding: 4px 6px;
+      text-align: left;
+      font-weight: 700;
+      background: #1e293b;
+      color: #e2e8f0;
+      border-bottom: 1px solid #334155;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      white-space: nowrap;
+    }
+    html[data-theme="halcyonic"] #view-testdesign .td-table th,
+    body.theme-halcyonic #view-testdesign .td-table th {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    #view-testdesign .td-table td {
+      padding: 3px 6px;
+      border-bottom: 1px solid #1e293b;
+      color: #f1f5f9;
+      white-space: nowrap;
+    }
+    html[data-theme="halcyonic"] #view-testdesign .td-table td,
+    body.theme-halcyonic #view-testdesign .td-table td {
+      border-bottom: 1px solid #e2e8f0;
+      color: #0f172a;
+    }
+    #view-testdesign .td-row-selected td {
+      background: rgba(14, 165, 233, 0.16);
+    }
+    html[data-theme="halcyonic"] #view-testdesign .td-row-selected td,
+    body.theme-halcyonic #view-testdesign .td-row-selected td {
+      background: #e0f2fe;
+      color: #0f172a;
+    }
+    #view-testdesign .td-badge-active {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #059669;
+      color: #ffffff;
+    }
+    #view-testdesign .td-badge-deactive {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #475569;
+      color: #ffffff;
+    }
+    #view-testdesign .td-badge-role {
+      display: inline-block;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #0284c7;
+      color: #ffffff;
+    }
+    #view-testdesign .td-pre {
+      background: #020617;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 4px;
+      padding: 8px;
+      font-size: 11px;
+      line-height: 1.42;
+      overflow: auto;
+      max-height: 220px;
+    }
+    html[data-theme="halcyonic"] #view-testdesign .td-pre,
+    body.theme-halcyonic #view-testdesign .td-pre {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
 </style>
 </head>
 <body class="striped-layout min-h-screen">
@@ -4790,6 +4920,11 @@
         <li data-export-scope="utility">
           <button type="button" data-tab="utility" class="nav-tab" title="6. Utility">
             <span><span class="nav-num" data-rail-num="6">6.</span><span class="nav-label-txt"> Utility <span class="util-beta-badge">BETA</span></span></span>
+          </button>
+        </li>
+        <li data-export-scope="studio">
+          <button type="button" data-tab="testdesign" class="nav-tab" title="7. Test Design (MC/DC &amp; State Transition)">
+            <span><span class="nav-num" data-rail-num="7">7.</span><span class="nav-label-txt"> Test Design</span></span>
           </button>
         </li>
 
@@ -4877,7 +5012,7 @@
             <button type="button" id="btnThemeDarkStudio" data-theme-mode="dark-studio" class="theme-switch-btn active-theme" title="테마1">테마1</button>
             <button type="button" id="btnThemeHalcyonic" data-theme-mode="halcyonic" class="theme-switch-btn" title="테마2">테마2</button>
           </div>
-          <span class="text-xs text-emerald-300 font-semibold mono" id="badgeAdminSyncState">Serverless v0.0.16</span>
+          <span class="text-xs text-emerald-300 font-semibold mono" id="badgeAdminSyncState">Serverless v0.0.19</span>
           <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
         </div>
       </div>
@@ -8245,6 +8380,126 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
         </div> <!-- /Outer Bookmark Body -->
       </div>
     </section>
+
+    <!-- TAB 7: Test Design (MC/DC Coverage & Active/Deactive State Transition) -->
+    <section id="view-testdesign" data-export-scope="studio" class="tab-view hidden space-y-2.5">
+      <datalist id="tdSignalDatalist"></datalist>
+
+      <!-- Top Control Bar -->
+      <div class="td-card flex flex-wrap items-center gap-2">
+        <label for="tdTitleInput" class="text-[11px] font-bold mono" title="생성할 Test Case 제목">Title</label>
+        <input id="tdTitleInput" type="text" class="td-input mono w-44" value="Req_Active_Check" placeholder="TC Title..." title="TC 제목 및 엑셀 파일명">
+        <label for="tdFormulaInput" class="text-[11px] font-bold mono" title="논리식 (and, or, not, xor, 괄호 지원)">Formula</label>
+        <input id="tdFormulaInput" type="text" class="td-input mono flex-1 min-w-[200px]" value="A and (B or C) or D" placeholder="A and (B or C) or D" title="예: A and B and C | A or B or C | A and (B or C) or D">
+        <div class="flex items-center gap-1" title="예제 수식 빠른 입력">
+          <button type="button" class="td-preset-btn td-btn bg-slate-700 hover:bg-slate-600 text-white" data-formula="A and B and C">AND</button>
+          <button type="button" class="td-preset-btn td-btn bg-slate-700 hover:bg-slate-600 text-white" data-formula="A or B or C">OR</button>
+          <button type="button" class="td-preset-btn td-btn bg-slate-700 hover:bg-slate-600 text-white" data-formula="A and (B or C) or D">MIX</button>
+        </div>
+        <label class="inline-flex items-center gap-1 text-[11px] font-bold cursor-pointer select-none" title="Active ↔ Deactive 상태 전환이 모두 검증되도록 교차 시퀀스 자동 구성">
+          <input id="tdTransitionToggle" type="checkbox" checked class="accent-sky-500">
+          <span>Transition</span>
+        </label>
+        <button id="btnTdAnalyze" type="button" class="td-btn bg-sky-600 hover:bg-sky-500 text-white" title="수식 분석 및 MC/DC 케이스 자동 선별">Analyze</button>
+        <button id="btnTdExportXlsx" type="button" class="td-btn bg-emerald-600 hover:bg-emerald-500 text-white" title="Truth Table, 선별 케이스, 전환 시퀀스를 엑셀(.xlsx)로 내보내기">Excel Export</button>
+        <button id="btnTdExportTc" type="button" class="td-btn bg-indigo-600 hover:bg-indigo-500 text-white" title="디자인된 시퀀스를 1. TC 에디터(#condN Condition check / #critN Check if)로 내보내기">TC Export</button>
+      </div>
+
+      <!-- Condition & Criteria Definitions -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
+        <div class="td-card space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold mono" title="수식의 각 변수(A, B, C...)에 매핑될 Condition check 조건">Conditions</span>
+            <span id="tdCondCountBadge" class="text-[10px] mono font-bold px-1.5 py-0.5 rounded bg-slate-700 text-white">0 vars</span>
+          </div>
+          <div class="overflow-auto max-h-[175px]">
+            <table class="td-table">
+              <thead>
+                <tr>
+                  <th style="width:44px;">Var</th>
+                  <th>Signal</th>
+                  <th style="width:66px;">Op</th>
+                  <th style="width:88px;">Value (T)</th>
+                </tr>
+              </thead>
+              <tbody id="tdCondDefBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="td-card space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold mono" title="Active / Deactive 결과에 따라 #critN에 생성할 Check if 검증 조건">Criteria</span>
+            <button id="btnTdAddCrit" type="button" class="td-btn bg-slate-700 hover:bg-slate-600 text-white" title="검증 조건 행 추가">+ Crit</button>
+          </div>
+          <div class="overflow-auto max-h-[175px]">
+            <table class="td-table">
+              <thead>
+                <tr>
+                  <th>Signal</th>
+                  <th style="width:64px;">Op</th>
+                  <th style="width:78px;">Active</th>
+                  <th style="width:78px;">Deactive</th>
+                  <th style="width:32px;"></th>
+                </tr>
+              </thead>
+              <tbody id="tdCritDefBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Truth Table (Left) + Transition Sequence & TC Script Preview (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-2.5">
+        <div class="td-card space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-extrabold mono" title="전체 진리표 및 MC/DC 독립쌍 기준 자동 선별 결과 (체크박스로 수동 조정 가능)">Truth Table</span>
+            <div class="flex items-center gap-1.5">
+              <span id="tdMcdcBadge" class="text-[10px] mono font-bold px-1.5 py-0.5 rounded bg-emerald-600 text-white">MC/DC 0/0</span>
+              <span id="tdSelBadge" class="text-[10px] mono font-bold px-1.5 py-0.5 rounded bg-sky-600 text-white">0 / 0</span>
+            </div>
+          </div>
+          <div class="overflow-auto max-h-[410px]">
+            <table class="td-table">
+              <thead id="tdTruthHead"></thead>
+              <tbody id="tdTruthBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <div class="td-card space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold mono" title="Active ↔ Deactive 상태 전환을 포함해 최종 설계된 실행 순서">Transition Flow</span>
+              <span id="tdSeqCountBadge" class="text-[10px] mono font-bold px-1.5 py-0.5 rounded bg-indigo-600 text-white">0 steps</span>
+            </div>
+            <div class="overflow-auto max-h-[195px]">
+              <table class="td-table">
+                <thead>
+                  <tr>
+                    <th style="width:48px;">Step</th>
+                    <th style="width:52px;">Case</th>
+                    <th>Pattern</th>
+                    <th style="width:72px;">State</th>
+                    <th>Transition</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody id="tdSeqBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="td-card space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold mono" title="1. TC 에디터로 내보낼 #condN / #critN 스크립트 미리보기">TC Preview</span>
+              <span id="tdFormulaErrBadge" class="hidden text-[10px] mono font-bold px-1.5 py-0.5 rounded bg-rose-600 text-white"></span>
+            </div>
+            <pre id="tdScriptPreview" class="td-pre mono"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
     </main>
 
     <!-- Bottom Page Footer -->
@@ -10582,7 +10837,7 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
           rawList.forEach(tok => {
             const isMinMaxSignal = !tok.includes("//") && !tok.includes("__") && /_(?:Min|Max)$/i.test(tok);
             const isSavedCalcVar = !tok.includes("//") && !tok.includes("__") && savedCalcVarNames.has(tok);
-            const isSeparateNamedVar = !tok.includes("//") && !tok.includes("__") && /^(?:cond\d+|crit\d+|[A-Za-z])$/i.test(tok);
+            const isSeparateNamedVar = !tok.includes("//") && !tok.includes("__") && /^(?:cond_section_|cond\d+|crit\d+|[A-Za-z])$/i.test(tok);
             if (isMinMaxSignal || isSavedCalcVar || isSeparateNamedVar) {
               plotEntities.push({
                 displaySignal: tok,
@@ -11793,11 +12048,15 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
         const anaLines = [];
         let epCounter = 0;
 
-        // Precompute effTriggerDsl per block so Def_cond and TriggerBlock share the exact expression
+        // v0.0.18: Method A section isolation using traced integer variable cond_section_ (no Time() dependency)
         ccBlocks.forEach((blk) => {
+          const secNum = parseInt(String(blk.secKey || "1"), 10) || 1;
           blk.effTriggerDsl = timeWindowIsolate
-            ? `(t_cond${blk.secKey}_start_ is not None and t_cond${blk.secKey}_end_ is not None and Time() >= t_cond${blk.secKey}_start_ and Time() <= t_cond${blk.secKey}_end_) and (${blk.triggerDsl})`
+            ? `(cond_section_ == ${secNum}) and (${blk.triggerDsl})`
             : blk.triggerDsl;
+          blk.effStopTriggerDsl = timeWindowIsolate
+            ? `(cond_section_ != ${secNum}) or (${blk.stopTriggerDsl})`
+            : blk.stopTriggerDsl;
         });
 
         // v0.0.13: Episode Def at top containing Def_condition, Def_cond, Def_crit blocks (all definitions except Trigger/#CritN) + Plot_Review
@@ -11823,7 +12082,7 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
           }
         });
 
-        const reviewPlotTokens = [...alphabetOrder, ...allCondVarNames, ...allCritVarNames];
+        const reviewPlotTokens = [...(timeWindowIsolate ? ["cond_section_"] : []), ...alphabetOrder, ...allCondVarNames, ...allCritVarNames];
         if (reviewPlotTokens.length > 0) {
           anaLines.push(`  Plot[Plot_Review] ${reviewPlotTokens.join(", ")}`);
         }
@@ -11863,7 +12122,7 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
             if (blk.isTimeRelatedTest) {
               anaLines.push(`  TriggerBlock[${condName}] ${blk.effTriggerDsl} | mode=${blk.triggerMode} | startOffset=${blk.startOffsetVal} | stopOffset=${blk.stopOffsetVal}`);
             } else {
-              anaLines.push(`  TriggerBlock[${condName}] ${blk.effTriggerDsl} | stop=${blk.stopTriggerDsl} | mode=${blk.triggerMode}`);
+              anaLines.push(`  TriggerBlock[${condName}] ${blk.effTriggerDsl} | stop=${blk.effStopTriggerDsl || blk.stopTriggerDsl} | mode=${blk.triggerMode}`);
             }
             blk.critCalculations.forEach((calc, cIdx) => {
               anaLines.push(`    Calculation ${calc.dslExpr} // ${critName}`);
@@ -12007,8 +12266,9 @@ From trigger for HoldTimeMs ms, check if AEB_ActiveFlag == 1</div>
       blocks.forEach((blk) => {
         const condName = `#Cond${blk.secKey}`;
         const critName = `#Crit${blk.secKey}`;
+        const wuSecNum = parseInt(String(blk.secKey || "1"), 10) || 1;
         const effTriggerDsl = timeWindowIsolate
-          ? `(t_cond${blk.secKey}_start_ is not None and t_cond${blk.secKey}_end_ is not None and Time() >= t_cond${blk.secKey}_start_ and Time() <= t_cond${blk.secKey}_end_) and (${blk.triggerDsl})`
+          ? `(cond_section_ == ${wuSecNum}) and (${blk.triggerDsl})`
           : blk.triggerDsl;
         if (blk.isTimeRelatedTest) {
           anaLines.push(`  TriggerBlock[${condName}] ${effTriggerDsl} | mode=${blk.triggerMode} | startOffset=${blk.startOffsetVal} | stopOffset=${blk.stopOffsetVal}`);
@@ -19752,7 +20012,7 @@ if __name__ == "__main__":
             const swtPart = ovInfo.includeSwt
               ? ` + Swt Enable: ${ovInfo.swtName} = ${JSON.stringify(ovInfo.swtValue)}`
               : " (Swt 생략)";
-            return `[A2L Override -> ${ovInfo.plantModelKey}] ${olDesc}${swtPart}`;
+            return `[A2L Override -> ${ovInfo.plantModelKey}] ${olDesc}${swtPart} + TsWait(100 ms)`;
           }
           return `blk = CreateTsBlock(${JSON.stringify(rawTxt)}); ts = CreateTsWrite(map_${resolvedSigName}, ${JSON.stringify(t.VALUE)}); blk.AppendTestStep(ts)`;
         }
@@ -20638,7 +20898,11 @@ if __name__ == "__main__":
         xml += `${indent}    </VARIABLE-NAME>\n`;
         xml += `${indent}  </VARIABLE-REFS>\n`;
       }
-      if (exprMode === "const_rev3" || exprMode === "const_rev2" || exprMode === "no_varref") {
+      if (/^-?\d+$/.test(String(formula || "").trim())) {
+        xml += `${indent}  <FORMULA format-rev="${valRev}" xsi:type="valueBaseExpression">\n`;
+        xml += `${indent}    <VALUE xsi:type="integer">${String(formula).trim()}</VALUE>\n`;
+        xml += `${indent}  </FORMULA>\n`;
+      } else if (exprMode === "const_rev3" || exprMode === "const_rev2" || exprMode === "no_varref") {
         xml += `${indent}  <FORMULA format-rev="${valRev}" xsi:type="valueBaseExpression">\n`;
         xml += `${indent}    <VALUE xsi:type="float">0.0</VALUE>\n`;
         xml += `${indent}  </FORMULA>\n`;
@@ -21322,8 +21586,9 @@ if __name__ == "__main__":
           if (isStartTraceOnlyPhrase(item)) {
             testStepsXml += buildTsStartTraceXmlStep(genStepHexId(), "        ");
             if (isolatedCondKeys.size > 0 && !traceStartTimestampRecorded && (condIsoSubStage === "S2F_ALL_STEPS" || condIsoSubStage === "S3_FULL" || condIsoSubStage === "FULL")) {
-              varInitialFloatZeroSet.add("t_trace_0");
-              testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "t_trace_0", "__import__('time').monotonic()", "        ", condIsoExprMode);
+              varInitialZeroSet.add("cond_section");
+              varInitialFloatZeroSet.add("cond_section");
+              testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "cond_section", "0", "        ", condIsoExprMode);
               traceStartTimestampRecorded = true;
             }
           } else if (isStopTraceOnlyPhrase(item)) {
@@ -21333,8 +21598,9 @@ if __name__ == "__main__":
             if (isStartMeasurementPhrase(item)) {
               testStepsXml += buildTsStartTraceXmlStep(genStepHexId(), "        ");
               if (isolatedCondKeys.size > 0 && !traceStartTimestampRecorded && (condIsoSubStage === "S2F_ALL_STEPS" || condIsoSubStage === "S3_FULL" || condIsoSubStage === "FULL")) {
-                varInitialFloatZeroSet.add("t_trace_0");
-                testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "t_trace_0", "__import__('time').monotonic()", "        ", condIsoExprMode);
+                varInitialZeroSet.add("cond_section");
+                varInitialFloatZeroSet.add("cond_section");
+                testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "cond_section", "0", "        ", condIsoExprMode);
                 traceStartTimestampRecorded = true;
               }
             } else if (isStopMeasurementPhrase(item)) {
@@ -21350,26 +21616,21 @@ if __name__ == "__main__":
       testStepsXml += `    <TESTSTEP format-rev="3" id="${genStepHexId()}" name="TsBlock" xsi:type="${TS_BLOCK_XSI}">\n`;
       testStepsXml += buildActionI18nXml("Test Flow", "      ");
       if (isolatedCondKeys.size > 0) {
-        varInitialFloatZeroSet.add("t_trace_0");
-        isolatedCondKeys.forEach(k => {
-          varInitialFloatZeroSet.add(`t_cond${k}_start`);
-          varInitialFloatZeroSet.add(`t_cond${k}_end`);
-        });
+        varInitialZeroSet.add("cond_section");
+        varInitialFloatZeroSet.add("cond_section");
         if (condIsoSubStage === "S1_VARS" || condIsoSubStage === "S1_VARS_ONLY") {
           traceStartTimestampRecorded = true;
-        } else if (["S2A_CONST_REV3", "S2B_CONST_REV2", "S2C_FUNC_AST", "S2D_MANUAL_EXPR", "S2E_NO_VARREF"].includes(condIsoSubStage)) {
-          testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "t_trace_0", "__import__('time').monotonic()", "      ", condIsoExprMode);
-          traceStartTimestampRecorded = true;
         } else if (!traceStartTimestampRecorded) {
-          testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "t_trace_0", "__import__('time').monotonic()", "      ", condIsoExprMode);
+          testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "cond_section", "0", "      ", condIsoExprMode);
           traceStartTimestampRecorded = true;
         }
       }
       const emitFullCondSlots = (condIsoSubStage === "S2F_ALL_STEPS" || condIsoSubStage === "S3_FULL" || condIsoSubStage === "FULL");
       const hasAnyCondMarker = parsedLines.some(pl => pl && pl.type === "SECTION_MARKER" && /^#cond\d*/i.test(String(pl.sectionTag || "")));
       if (emitFullCondSlots && !hasAnyCondMarker && isolatedCondKeys.has("1")) {
-        varInitialFloatZeroSet.add("t_cond1_start");
-        testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "t_cond1_start", "max(0.0, __import__('time').monotonic() - t_trace_0)", "      ", condIsoExprMode);
+        varInitialZeroSet.add("cond_section");
+        varInitialFloatZeroSet.add("cond_section");
+        testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "cond_section", "1", "      ", condIsoExprMode);
         activeIsolatedCondKey = "1";
       }
 
@@ -21495,12 +21756,6 @@ if __name__ == "__main__":
         if (p.type === "SECTION_MARKER") {
           closeMultiCheckIfOpen(sectionIndent);
           closeAllFlowContainers();
-          if (emitFullCondSlots && activeIsolatedCondKey) {
-            const endVar = `t_cond${activeIsolatedCondKey}_end`;
-            varInitialFloatZeroSet.add(endVar);
-            testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), endVar, "max(0.0, __import__('time').monotonic() - t_trace_0)", openSubBlock ? "        " : "      ", condIsoExprMode);
-            activeIsolatedCondKey = "";
-          }
           if (openSubBlock) {
             testStepsXml += `      </TESTSTEP>\n`;
           }
@@ -21511,9 +21766,10 @@ if __name__ == "__main__":
           const matchedCondKey = condKeyMatch ? (condKeyMatch[1] || "1") : "";
           if (emitFullCondSlots && matchedCondKey && isolatedCondKeys.has(matchedCondKey)) {
             const secKey = matchedCondKey;
-            const startVar = `t_cond${secKey}_start`;
-            varInitialFloatZeroSet.add(startVar);
-            testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), startVar, "max(0.0, __import__('time').monotonic() - t_trace_0)", "        ", condIsoExprMode);
+            const secNum = parseInt(secKey, 10) || 1;
+            varInitialZeroSet.add("cond_section");
+            varInitialFloatZeroSet.add("cond_section");
+            testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "cond_section", String(secNum), "        ", condIsoExprMode);
             activeIsolatedCondKey = secKey;
           }
           return;
@@ -21744,6 +22000,7 @@ if __name__ == "__main__":
             if (ovInfo.includeSwt) {
               testStepsXml += buildTsWriteXmlStep(genStepHexId(), ovInfo.swtName, ovInfo.swtValue, baseIndent + "  ");
             }
+            testStepsXml += buildTsWaitXmlStep(genStepHexId(), "100", "ms", baseIndent + "  ");
           } else {
             testStepsXml += buildTsWriteXmlStep(genStepHexId(), resolvedSigName, t.VALUE, baseIndent + "  ", p.signal);
           }
@@ -21977,9 +22234,9 @@ if __name__ == "__main__":
       closeMultiCheckIfOpen(finalSectionIndent);
       closeAllFlowContainers();
       if (emitFullCondSlots && activeIsolatedCondKey) {
-        const endVar = `t_cond${activeIsolatedCondKey}_end`;
-        varInitialFloatZeroSet.add(endVar);
-        testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), endVar, "max(0.0, __import__('time').monotonic() - t_trace_0)", openSubBlock ? "        " : "      ", condIsoExprMode);
+        varInitialZeroSet.add("cond_section");
+        varInitialFloatZeroSet.add("cond_section");
+        testStepsXml += buildTsCalculationSaveOnlyXmlStep(genStepHexId(), "cond_section", "0", openSubBlock ? "        " : "      ", condIsoExprMode);
         activeIsolatedCondKey = "";
       }
       if (openSubBlock) {
@@ -23034,7 +23291,7 @@ const STUDIO_I18N_DICT = {
         state.activeTab = "ecutest";
       }
       if (!document.getElementById(`view-${activeTab}`)) {
-        const availableTabs = ["editor", "signals", "ecutest", "grammars", "taeditor", "utility"];
+        const availableTabs = ["editor", "signals", "ecutest", "grammars", "taeditor", "utility", "testdesign"];
         const firstExisting = availableTabs.find(t => Boolean(document.getElementById(`view-${t}`))) || "editor";
         activeTab = firstExisting;
         state.activeTab = firstExisting;
@@ -23061,6 +23318,8 @@ const STUDIO_I18N_DICT = {
         renderTaEditorTab();
       } else if (activeTab === "utility") {
         renderUtilityTab();
+      } else if (activeTab === "testdesign") {
+        if (typeof renderTestDesignTab === "function") renderTestDesignTab();
       }
       if (typeof window.syncAllNavPreviewButtonsUi === "function") {
         window.syncAllNavPreviewButtonsUi();
@@ -27170,8 +27429,8 @@ const STUDIO_I18N_DICT = {
                   ? `TsWrite(${ovInfo.olBaseName}[0] ~ ${ovInfo.olBaseName}[${ovInfo.totalSize - 1}] 일괄 ${ovInfo.totalSize}개 = ${t.VALUE})`
                   : `TsWrite(${ovInfo.olName} = ${t.VALUE})`;
                 cmdDesc = ovInfo.includeSwt
-                  ? `${olPart} + TsWrite(${ovInfo.swtName} = ${ovInfo.swtValue}) [MODEL-KEY: ${ovInfo.plantModelKey}]`
-                  : `${olPart} [MODEL-KEY: ${ovInfo.plantModelKey}, Swt 생략]`;
+                  ? `${olPart} + TsWrite(${ovInfo.swtName} = ${ovInfo.swtValue}) + TsWait(100 ms) [MODEL-KEY: ${ovInfo.plantModelKey}]`
+                  : `${olPart} + TsWait(100 ms) [MODEL-KEY: ${ovInfo.plantModelKey}, Swt 생략]`;
               } else {
                 cmdDesc = `TsWrite(${resolvedSig} = ${t.VALUE})`;
               }
@@ -40000,6 +40259,629 @@ function updateSignalAutocompleteFromEditor(editorId = "tcScriptInput", fromInpu
       initServerlessWorkspaceAndAdminSync();
       if (typeof window.syncAllNavPreviewButtonsUi === "function") window.syncAllNavPreviewButtonsUi();
       const editorTabBtn = document.querySelector('.nav-tab[data-tab="editor"]');
+
+      // =========================================================================
+      // v0.0.19: 7. Test Design (Boolean Parser, MC/DC Selector, Transition Sequencer, Excel & TC Export)
+      // =========================================================================
+      const tdState = {
+        title: "Req_Active_Check",
+        formula: "A and (B or C) or D",
+        useTransition: true,
+        vars: [],
+        condDefs: {},
+        critDefs: [{ sig: "Req_Active", op: "==", activeVal: "1", deactiveVal: "0" }],
+        truthRows: [],
+        selectedIndices: new Set(),
+        mcdcCoveredVars: [],
+        mcdcPairMap: new Map(),
+        mcdcPairsByVar: new Map(),
+        sequence: [],
+        parseError: ""
+      };
+
+      function tdTokenizeFormula(expr) {
+        const tokens = [];
+        const s = String(expr || "");
+        let i = 0;
+        while (i < s.length) {
+          const ch = s[i];
+          if (/\s/.test(ch)) { i++; continue; }
+          if (ch === "(") { tokens.push({ type: "LP", val: "(" }); i++; continue; }
+          if (ch === ")") { tokens.push({ type: "RP", val: ")" }); i++; continue; }
+          if (ch === "!" || ch === "~") { tokens.push({ type: "NOT", val: "not" }); i++; continue; }
+          if (s.slice(i, i + 2) === "&&") { tokens.push({ type: "AND", val: "and" }); i += 2; continue; }
+          if (ch === "&") { tokens.push({ type: "AND", val: "and" }); i++; continue; }
+          if (s.slice(i, i + 2) === "||") { tokens.push({ type: "OR", val: "or" }); i += 2; continue; }
+          if (ch === "|") { tokens.push({ type: "OR", val: "or" }); i++; continue; }
+          if (ch === "^") { tokens.push({ type: "XOR", val: "xor" }); i++; continue; }
+          if (/[A-Za-z_]/.test(ch)) {
+            let j = i;
+            while (j < s.length && /[A-Za-z0-9_]/.test(s[j])) j++;
+            const word = s.slice(i, j);
+            const lw = word.toLowerCase();
+            if (lw === "and") tokens.push({ type: "AND", val: "and" });
+            else if (lw === "or") tokens.push({ type: "OR", val: "or" });
+            else if (lw === "not") tokens.push({ type: "NOT", val: "not" });
+            else if (lw === "xor") tokens.push({ type: "XOR", val: "xor" });
+            else tokens.push({ type: "VAR", val: word });
+            i = j;
+            continue;
+          }
+          throw new Error(`Invalid token '${ch}'`);
+        }
+        return tokens;
+      }
+
+      function tdParseFormulaAst(expr) {
+        const tokens = tdTokenizeFormula(expr);
+        if (tokens.length === 0) throw new Error("Empty formula");
+        let pos = 0;
+        const vars = [];
+        const varSet = new Set();
+        const peek = () => tokens[pos] || null;
+        const consume = (t) => {
+          const cur = peek();
+          if (!cur || (t && cur.type !== t)) throw new Error("Unexpected token");
+          pos++;
+          return cur;
+        };
+        const parseOr = () => {
+          let node = parseXor();
+          while (peek() && peek().type === "OR") {
+            consume("OR");
+            node = { type: "OR", left: node, right: parseXor() };
+          }
+          return node;
+        };
+        const parseXor = () => {
+          let node = parseAnd();
+          while (peek() && peek().type === "XOR") {
+            consume("XOR");
+            node = { type: "XOR", left: node, right: parseAnd() };
+          }
+          return node;
+        };
+        const parseAnd = () => {
+          let node = parseNot();
+          while (peek() && peek().type === "AND") {
+            consume("AND");
+            node = { type: "AND", left: node, right: parseNot() };
+          }
+          return node;
+        };
+        const parseNot = () => {
+          if (peek() && peek().type === "NOT") {
+            consume("NOT");
+            return { type: "NOT", arg: parseNot() };
+          }
+          return parsePrimary();
+        };
+        const parsePrimary = () => {
+          const cur = peek();
+          if (!cur) throw new Error("Incomplete expression");
+          if (cur.type === "LP") {
+            consume("LP");
+            const inner = parseOr();
+            consume("RP");
+            return inner;
+          }
+          if (cur.type === "VAR") {
+            consume("VAR");
+            if (!varSet.has(cur.val)) {
+              varSet.add(cur.val);
+              vars.push(cur.val);
+            }
+            return { type: "VAR", name: cur.val };
+          }
+          throw new Error(`Unexpected '${cur.val}'`);
+        };
+        const ast = parseOr();
+        if (pos < tokens.length) throw new Error(`Unexpected '${tokens[pos].val}'`);
+        if (vars.length === 0) throw new Error("No variables");
+        if (vars.length > 10) throw new Error("Max 10 vars");
+        return { ast, vars };
+      }
+
+      function tdEvalAst(node, env) {
+        switch (node.type) {
+          case "VAR": return Boolean(env[node.name]);
+          case "NOT": return !tdEvalAst(node.arg, env);
+          case "AND": return tdEvalAst(node.left, env) && tdEvalAst(node.right, env);
+          case "OR": return tdEvalAst(node.left, env) || tdEvalAst(node.right, env);
+          case "XOR": return Boolean(tdEvalAst(node.left, env)) !== Boolean(tdEvalAst(node.right, env));
+          default: return false;
+        }
+      }
+
+      function tdComputeMcdc(vars, truthRows) {
+        const n = vars.length;
+        const pairsByVar = new Map();
+        const rowDegree = new Array(truthRows.length).fill(0);
+        for (let vi = 0; vi < n; vi++) {
+          const bit = 1 << (n - 1 - vi);
+          const vPairs = [];
+          for (let i = 0; i < truthRows.length; i++) {
+            if ((i & bit) !== 0) {
+              const j = i ^ bit;
+              if (truthRows[i].outcome !== truthRows[j].outcome) {
+                vPairs.push({ tIdx: i, fIdx: j });
+                rowDegree[i]++;
+                rowDegree[j]++;
+              }
+            }
+          }
+          pairsByVar.set(vars[vi], vPairs);
+        }
+
+        const varOrder = [...vars].sort((a, b) => (pairsByVar.get(a).length - pairsByVar.get(b).length));
+        const selected = new Set();
+        const roleMap = new Map();
+        const addRole = (idx, label) => {
+          if (!roleMap.has(idx)) roleMap.set(idx, []);
+          const arr = roleMap.get(idx);
+          if (!arr.includes(label)) arr.push(label);
+        };
+        const coveredVars = [];
+
+        varOrder.forEach(vName => {
+          const candidates = pairsByVar.get(vName) || [];
+          if (candidates.length === 0) return;
+          let bestPair = null;
+          let bestScore = -1e9;
+          candidates.forEach(pair => {
+            const newCount = (selected.has(pair.tIdx) ? 0 : 1) + (selected.has(pair.fIdx) ? 0 : 1);
+            const degBonus = rowDegree[pair.tIdx] + rowDegree[pair.fIdx];
+            const score = -newCount * 1000 + degBonus * 10;
+            if (score > bestScore) {
+              bestScore = score;
+              bestPair = pair;
+            }
+          });
+          if (bestPair) {
+            selected.add(bestPair.tIdx);
+            selected.add(bestPair.fIdx);
+            addRole(bestPair.tIdx, `${vName}(T)`);
+            addRole(bestPair.fIdx, `${vName}(F)`);
+            coveredVars.push(vName);
+          }
+        });
+
+        return { selected, roleMap, coveredVars, pairsByVar };
+      }
+
+      function tdBuildTransitionSequence(truthRows, selectedIndices, roleMap, pairsByVar, useTransition) {
+        const selRows = Array.from(selectedIndices)
+          .sort((a, b) => a - b)
+          .map(idx => truthRows[idx])
+          .filter(Boolean);
+        if (selRows.length === 0) return [];
+
+        const makeStep = (row, prevState) => {
+          const curState = row.outcome ? "Active" : "Deactive";
+          const trans = !prevState ? "Init" : (prevState === curState ? `${curState} (Hold)` : `${prevState} → ${curState}`);
+          const roles = (roleMap.get(row.idx) || []).join(", ") || "Manual";
+          return { row, state: curState, transition: trans, role: roles };
+        };
+
+        if (!useTransition) {
+          const seq = [];
+          let prev = "";
+          selRows.forEach(r => {
+            const st = makeStep(r, prev);
+            seq.push(st);
+            prev = st.state;
+          });
+          return seq;
+        }
+
+        const activeRows = selRows.filter(r => r.outcome);
+        const deactiveRows = selRows.filter(r => !r.outcome);
+        if (activeRows.length === 0 || deactiveRows.length === 0) {
+          return tdBuildTransitionSequence(truthRows, selectedIndices, roleMap, pairsByVar, false);
+        }
+
+        const findBridge = (pool, targetIdx) => {
+          for (const [, pList] of pairsByVar.entries()) {
+            for (const pr of pList) {
+              if (pr.tIdx === targetIdx && pool.some(r => r.idx === pr.fIdx)) return pool.find(r => r.idx === pr.fIdx);
+              if (pr.fIdx === targetIdx && pool.some(r => r.idx === pr.tIdx)) return pool.find(r => r.idx === pr.tIdx);
+            }
+          }
+          return pool.reduce((best, r) => ((roleMap.get(r.idx) || []).length > (roleMap.get(best.idx) || []).length ? r : best), pool[0]);
+        };
+
+        const remA = [...activeRows];
+        const remD = [...deactiveRows];
+        const seq = [];
+        let wantActive = true;
+        let prev = "";
+
+        while (remA.length > 0 || remD.length > 0) {
+          let chosen = null;
+          if (wantActive) {
+            chosen = remA.length > 0 ? remA.shift() : findBridge(activeRows, remD[0].idx);
+          } else {
+            chosen = remD.length > 0 ? remD.shift() : findBridge(deactiveRows, remA[0].idx);
+          }
+          const st = makeStep(chosen, prev);
+          seq.push(st);
+          prev = st.state;
+          wantActive = !wantActive;
+        }
+        return seq;
+      }
+
+      function tdGenerateTcScript() {
+        const lines = [];
+        const vars = tdState.vars;
+        const crits = tdState.critDefs.filter(c => String(c.sig || "").trim());
+        tdState.sequence.forEach((step, idx) => {
+          const n = idx + 1;
+          lines.push(`#cond${n}`);
+          vars.forEach((v, vi) => {
+            const def = tdState.condDefs[v] || { sig: `Sig_${v}`, op: "==", val: "1" };
+            const isT = Boolean(step.row.values[vi]);
+            const sym = isT ? v : `~${v}`;
+            const sig = String(def.sig || `Sig_${v}`).trim();
+            const op = String(def.op || "==").trim();
+            const val = String(def.val ?? "1").trim();
+            lines.push(`Condition check ${sym} : ${sig} ${op} ${val}`);
+          });
+          lines.push(`#crit${n}`);
+          if (crits.length > 0) {
+            crits.forEach(c => {
+              const targetVal = step.row.outcome ? String(c.activeVal ?? "1").trim() : String(c.deactiveVal ?? "0").trim();
+              lines.push(`Check if ${String(c.sig).trim()} ${String(c.op || "==").trim()} ${targetVal}`);
+            });
+          } else {
+            lines.push(`Check if Req_Active == ${step.row.outcome ? "1" : "0"}`);
+          }
+        });
+        return lines.join("\n");
+      }
+
+      function tdRunAnalysis(preserveManualSelection = false) {
+        const formulaEl = document.getElementById("tdFormulaInput");
+        const titleEl = document.getElementById("tdTitleInput");
+        const transEl = document.getElementById("tdTransitionToggle");
+        if (formulaEl) tdState.formula = formulaEl.value.trim();
+        if (titleEl) tdState.title = titleEl.value.trim() || "Req_Active_Check";
+        if (transEl) tdState.useTransition = Boolean(transEl.checked);
+
+        try {
+          const { ast, vars } = tdParseFormulaAst(tdState.formula);
+          const varsChanged = JSON.stringify(vars) !== JSON.stringify(tdState.vars);
+          tdState.vars = vars;
+          tdState.parseError = "";
+
+          vars.forEach(v => {
+            if (!tdState.condDefs[v]) {
+              tdState.condDefs[v] = { sig: `Sig_${v}`, op: "==", val: "1" };
+            }
+          });
+
+          const total = 1 << vars.length;
+          const rows = [];
+          for (let i = 0; i < total; i++) {
+            const values = [];
+            const env = {};
+            let pattern = "";
+            for (let vi = 0; vi < vars.length; vi++) {
+              const bitVal = Boolean((i >> (vars.length - 1 - vi)) & 1);
+              values.push(bitVal);
+              env[vars[vi]] = bitVal;
+              pattern += bitVal ? "T" : "F";
+            }
+            rows.push({
+              idx: i,
+              caseNo: i + 1,
+              values,
+              pattern,
+              outcome: tdEvalAst(ast, env)
+            });
+          }
+          tdState.truthRows = rows;
+
+          const mcdc = tdComputeMcdc(vars, rows);
+          tdState.mcdcCoveredVars = mcdc.coveredVars;
+          tdState.mcdcPairMap = mcdc.roleMap;
+          tdState.mcdcPairsByVar = mcdc.pairsByVar;
+          if (!preserveManualSelection || varsChanged) {
+            tdState.selectedIndices = new Set(mcdc.selected);
+          }
+
+          tdState.sequence = tdBuildTransitionSequence(
+            tdState.truthRows,
+            tdState.selectedIndices,
+            tdState.mcdcPairMap,
+            tdState.mcdcPairsByVar,
+            tdState.useTransition
+          );
+        } catch (err) {
+          tdState.parseError = err.message || "Parse error";
+          tdState.truthRows = [];
+          tdState.sequence = [];
+        }
+        renderTestDesignViews();
+      }
+
+      function renderTestDesignViews() {
+        const errBadge = document.getElementById("tdFormulaErrBadge");
+        if (errBadge) {
+          if (tdState.parseError) {
+            errBadge.textContent = tdState.parseError;
+            errBadge.classList.remove("hidden");
+          } else {
+            errBadge.classList.add("hidden");
+          }
+        }
+
+        const dl = document.getElementById("tdSignalDatalist");
+        if (dl && Array.isArray(state.signals)) {
+          const topSigs = state.signals.slice(0, 600);
+          dl.innerHTML = topSigs.map(s => `<option value="${escapeXml(s.name)}"></option>`).join("");
+        }
+
+        const condBadge = document.getElementById("tdCondCountBadge");
+        if (condBadge) condBadge.textContent = `${tdState.vars.length} vars`;
+        const condBody = document.getElementById("tdCondDefBody");
+        if (condBody) {
+          condBody.innerHTML = tdState.vars.map(v => {
+            const d = tdState.condDefs[v] || { sig: `Sig_${v}`, op: "==", val: "1" };
+            const ops = ["==", "!=", ">=", "<=", ">", "<"].map(o => `<option value="${o}" ${d.op === o ? "selected" : ""}>${o}</option>`).join("");
+            return `<tr>
+              <td class="font-extrabold mono text-sky-400">${escapeXml(v)}</td>
+              <td><input type="text" list="tdSignalDatalist" class="td-input mono w-full td-cond-sig" data-var="${escapeXml(v)}" value="${escapeXml(d.sig)}" placeholder="Signal..."></td>
+              <td><select class="td-select mono w-full td-cond-op" data-var="${escapeXml(v)}">${ops}</select></td>
+              <td><input type="text" class="td-input mono w-full td-cond-val" data-var="${escapeXml(v)}" value="${escapeXml(d.val)}" placeholder="1"></td>
+            </tr>`;
+          }).join("");
+        }
+
+        const critBody = document.getElementById("tdCritDefBody");
+        if (critBody) {
+          critBody.innerHTML = tdState.critDefs.map((c, ci) => {
+            const ops = ["==", "!=", ">=", "<=", ">", "<"].map(o => `<option value="${o}" ${c.op === o ? "selected" : ""}>${o}</option>`).join("");
+            return `<tr>
+              <td><input type="text" list="tdSignalDatalist" class="td-input mono w-full td-crit-sig" data-ci="${ci}" value="${escapeXml(c.sig)}" placeholder="Crit Signal..."></td>
+              <td><select class="td-select mono w-full td-crit-op" data-ci="${ci}">${ops}</select></td>
+              <td><input type="text" class="td-input mono w-full td-crit-act" data-ci="${ci}" value="${escapeXml(c.activeVal)}" placeholder="1"></td>
+              <td><input type="text" class="td-input mono w-full td-crit-deact" data-ci="${ci}" value="${escapeXml(c.deactiveVal)}" placeholder="0"></td>
+              <td><button type="button" class="td-crit-del text-rose-400 hover:text-rose-300 font-bold px-1" data-ci="${ci}" title="삭제">&times;</button></td>
+            </tr>`;
+          }).join("");
+        }
+
+        const mcdcBadge = document.getElementById("tdMcdcBadge");
+        const selBadge = document.getElementById("tdSelBadge");
+        if (mcdcBadge) mcdcBadge.textContent = `MC/DC ${tdState.mcdcCoveredVars.length}/${tdState.vars.length}`;
+        if (selBadge) selBadge.textContent = `${tdState.selectedIndices.size} / ${tdState.truthRows.length}`;
+
+        const truthHead = document.getElementById("tdTruthHead");
+        const truthBody = document.getElementById("tdTruthBody");
+        if (truthHead) {
+          truthHead.innerHTML = `<tr>
+            <th style="width:34px;">Sel</th>
+            <th style="width:36px;">#</th>
+            ${tdState.vars.map(v => `<th class="mono" style="width:34px;">${escapeXml(v)}</th>`).join("")}
+            <th style="width:72px;">Result</th>
+            <th>MC/DC Role</th>
+          </tr>`;
+        }
+        if (truthBody) {
+          truthBody.innerHTML = tdState.truthRows.map(r => {
+            const isSel = tdState.selectedIndices.has(r.idx);
+            const roles = (tdState.mcdcPairMap.get(r.idx) || []).map(lbl => `<span class="td-badge-role mr-1">${escapeXml(lbl)}</span>`).join("");
+            return `<tr class="${isSel ? "td-row-selected" : ""}">
+              <td><input type="checkbox" class="td-truth-chk accent-sky-500" data-idx="${r.idx}" ${isSel ? "checked" : ""}></td>
+              <td class="mono font-bold">${r.caseNo}</td>
+              ${r.values.map(bv => `<td class="mono font-bold ${bv ? "text-emerald-400" : "text-slate-400"}">${bv ? "T" : "F"}</td>`).join("")}
+              <td><span class="${r.outcome ? "td-badge-active" : "td-badge-deactive"}">${r.outcome ? "Active" : "Deactive"}</span></td>
+              <td>${roles}</td>
+            </tr>`;
+          }).join("");
+        }
+
+        const seqBadge = document.getElementById("tdSeqCountBadge");
+        if (seqBadge) seqBadge.textContent = `${tdState.sequence.length} steps`;
+        const seqBody = document.getElementById("tdSeqBody");
+        if (seqBody) {
+          seqBody.innerHTML = tdState.sequence.map((st, si) => `<tr>
+            <td class="mono font-bold">#${si + 1}</td>
+            <td class="mono font-bold">${st.row.caseNo}</td>
+            <td class="mono font-bold">${escapeXml(st.row.pattern)}</td>
+            <td><span class="${st.row.outcome ? "td-badge-active" : "td-badge-deactive"}">${st.state}</span></td>
+            <td class="mono">${escapeXml(st.transition)}</td>
+            <td class="mono">${escapeXml(st.role)}</td>
+          </tr>`).join("");
+        }
+
+        const previewEl = document.getElementById("tdScriptPreview");
+        if (previewEl) {
+          previewEl.textContent = tdState.parseError ? `// Error: ${tdState.parseError}` : tdGenerateTcScript();
+        }
+      }
+
+      function renderTestDesignTab() {
+        if (tdState.truthRows.length === 0 && !tdState.parseError) {
+          tdRunAnalysis(false);
+        } else {
+          renderTestDesignViews();
+        }
+      }
+
+      function exportTestDesignXlsx() {
+        if (tdState.truthRows.length === 0) {
+          showToast("먼저 유효한 수식을 분석하세요.", "error");
+          return;
+        }
+        const headers = ["Section", "Step / Case #", "Pattern", ...tdState.vars, "Result / State", "Selected / Transition", "MC/DC Role / Script"];
+        const padRow = (arr) => {
+          const out = arr.slice(0, headers.length);
+          while (out.length < headers.length) out.push("");
+          return out;
+        };
+        const rows = [];
+        rows.push(padRow(["[SUMMARY]", tdState.title, tdState.formula, `MC/DC ${tdState.mcdcCoveredVars.length}/${tdState.vars.length}`, `Selected ${tdState.selectedIndices.size}/${tdState.truthRows.length}`, tdState.useTransition ? "Transition ON" : "Transition OFF", ""]));
+        tdState.vars.forEach(v => {
+          const d = tdState.condDefs[v] || { sig: `Sig_${v}`, op: "==", val: "1" };
+          rows.push(padRow(["[COND_DEF]", v, `${d.sig} ${d.op} ${d.val}`, "", "", "", `Condition check ${v} : ${d.sig} ${d.op} ${d.val}`]));
+        });
+        tdState.critDefs.forEach((c, ci) => {
+          rows.push(padRow(["[CRIT_DEF]", `Crit${ci + 1}`, `${c.sig} ${c.op} Active:${c.activeVal} / Deactive:${c.deactiveVal}`, "", "", "", ""]));
+        });
+        rows.push(padRow([]));
+
+        tdState.truthRows.forEach(r => {
+          const isSel = tdState.selectedIndices.has(r.idx);
+          const roleTxt = (tdState.mcdcPairMap.get(r.idx) || []).join(", ");
+          rows.push([
+            "[TRUTH_TABLE]",
+            `Case ${r.caseNo}`,
+            r.pattern,
+            ...r.values.map(b => b ? "T" : "F"),
+            r.outcome ? "Active" : "Deactive",
+            isSel ? "SELECTED" : "-",
+            roleTxt
+          ]);
+        });
+        rows.push(padRow([]));
+
+        const crits = tdState.critDefs.filter(c => String(c.sig || "").trim());
+        tdState.sequence.forEach((st, si) => {
+          const n = si + 1;
+          const condLines = tdState.vars.map((v, vi) => {
+            const d = tdState.condDefs[v] || { sig: `Sig_${v}`, op: "==", val: "1" };
+            const sym = st.row.values[vi] ? v : `~${v}`;
+            return `Condition check ${sym} : ${d.sig} ${d.op} ${d.val}`;
+          }).join(" ; ");
+          const critLines = crits.map(c => `Check if ${c.sig} ${c.op} ${st.row.outcome ? c.activeVal : c.deactiveVal}`).join(" ; ");
+          rows.push([
+            "[DESIGN_SEQ]",
+            `#cond${n} (Case ${st.row.caseNo})`,
+            st.row.pattern,
+            ...st.row.values.map(b => b ? "T" : "F"),
+            st.state,
+            st.transition,
+            `${condLines} | #crit${n}: ${critLines}`
+          ]);
+        });
+
+        const blob = buildOfflineXlsxBlob(headers, rows, "Test_Design");
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const safeName = String(tdState.title || "TestDesign").replace(/[^A-Za-z0-9_\-가-힣]/g, "_");
+        a.download = `TestDesign_${safeName}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast(`Test Design 엑셀(${tdState.sequence.length} steps) 다운로드 완료!`, "success");
+      }
+
+      function exportTestDesignToTcEditor() {
+        if (tdState.sequence.length === 0) {
+          showToast("내보낼 Test Design 시퀀스가 없습니다.", "error");
+          return;
+        }
+        const scriptText = tdGenerateTcScript();
+        const newTc = {
+          id: "",
+          projectVariant: (state.projectVariants && state.projectVariants[0]) || "AQ451",
+          state: "New",
+          title: tdState.title || "TestDesign_TC",
+          description: `[Test Design] ${tdState.formula} (MC/DC ${tdState.mcdcCoveredVars.length}/${tdState.vars.length}, ${tdState.sequence.length} steps)`,
+          preConditions: (state.prePresets || STANDARD_PRE_CONDITIONS).join("\n"),
+          postConditions: (state.postPresets || STANDARD_POST_CONDITIONS).join("\n"),
+          reqId: "",
+          environment: "",
+          priority: "New",
+          script: scriptText
+        };
+        state.testCases.push(newTc);
+        state.activeTcIndex = state.testCases.length - 1;
+        state.tcPage = Math.ceil(state.testCases.length / (state.tcPageSize || 20));
+        state.activeTab = "editor";
+        const editorBtn = document.querySelector('#nav .nav-tab[data-tab="editor"]');
+        if (editorBtn) {
+          editorBtn.click();
+        } else {
+          renderAll();
+        }
+        saveToStorage();
+        showToast(`"${newTc.title}" (${tdState.sequence.length}개 #cond/#crit)가 1. TC 에디터에 추가되었습니다!`, "success");
+      }
+
+      function initTestDesignEvents() {
+        document.getElementById("btnTdAnalyze")?.addEventListener("click", () => tdRunAnalysis(false));
+        document.getElementById("tdFormulaInput")?.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") tdRunAnalysis(false);
+        });
+        document.getElementById("tdTitleInput")?.addEventListener("input", (e) => {
+          tdState.title = e.target.value.trim() || "Req_Active_Check";
+        });
+        document.getElementById("tdTransitionToggle")?.addEventListener("change", () => tdRunAnalysis(true));
+        document.querySelectorAll(".td-preset-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const f = btn.getAttribute("data-formula") || "";
+            const inp = document.getElementById("tdFormulaInput");
+            if (inp) inp.value = f;
+            tdRunAnalysis(false);
+          });
+        });
+        document.getElementById("btnTdAddCrit")?.addEventListener("click", () => {
+          tdState.critDefs.push({ sig: `Crit_Sig_${tdState.critDefs.length + 1}`, op: "==", activeVal: "1", deactiveVal: "0" });
+          renderTestDesignViews();
+        });
+        document.getElementById("tdCondDefBody")?.addEventListener("input", (e) => {
+          const v = e.target.getAttribute("data-var");
+          if (!v || !tdState.condDefs[v]) return;
+          if (e.target.classList.contains("td-cond-sig")) tdState.condDefs[v].sig = e.target.value;
+          else if (e.target.classList.contains("td-cond-op")) tdState.condDefs[v].op = e.target.value;
+          else if (e.target.classList.contains("td-cond-val")) tdState.condDefs[v].val = e.target.value;
+          const previewEl = document.getElementById("tdScriptPreview");
+          if (previewEl && !tdState.parseError) previewEl.textContent = tdGenerateTcScript();
+        });
+        document.getElementById("tdCritDefBody")?.addEventListener("input", (e) => {
+          const ci = Number(e.target.getAttribute("data-ci"));
+          if (Number.isNaN(ci) || !tdState.critDefs[ci]) return;
+          if (e.target.classList.contains("td-crit-sig")) tdState.critDefs[ci].sig = e.target.value;
+          else if (e.target.classList.contains("td-crit-op")) tdState.critDefs[ci].op = e.target.value;
+          else if (e.target.classList.contains("td-crit-act")) tdState.critDefs[ci].activeVal = e.target.value;
+          else if (e.target.classList.contains("td-crit-deact")) tdState.critDefs[ci].deactiveVal = e.target.value;
+          const previewEl = document.getElementById("tdScriptPreview");
+          if (previewEl && !tdState.parseError) previewEl.textContent = tdGenerateTcScript();
+        });
+        document.getElementById("tdCritDefBody")?.addEventListener("click", (e) => {
+          const delBtn = e.target.closest(".td-crit-del");
+          if (!delBtn) return;
+          const ci = Number(delBtn.getAttribute("data-ci"));
+          if (!Number.isNaN(ci) && tdState.critDefs.length > 1) {
+            tdState.critDefs.splice(ci, 1);
+            renderTestDesignViews();
+          }
+        });
+        document.getElementById("tdTruthBody")?.addEventListener("change", (e) => {
+          if (!e.target.classList.contains("td-truth-chk")) return;
+          const idx = Number(e.target.getAttribute("data-idx"));
+          if (Number.isNaN(idx)) return;
+          if (e.target.checked) tdState.selectedIndices.add(idx);
+          else tdState.selectedIndices.delete(idx);
+          tdState.sequence = tdBuildTransitionSequence(
+            tdState.truthRows,
+            tdState.selectedIndices,
+            tdState.mcdcPairMap,
+            tdState.mcdcPairsByVar,
+            tdState.useTransition
+          );
+          renderTestDesignViews();
+        });
+        document.getElementById("btnTdExportXlsx")?.addEventListener("click", exportTestDesignXlsx);
+        document.getElementById("btnTdExportTc")?.addEventListener("click", exportTestDesignToTcEditor);
+      }
+
+      initTestDesignEvents();
       if (editorTabBtn) {
         editorTabBtn.click();
       } else {
